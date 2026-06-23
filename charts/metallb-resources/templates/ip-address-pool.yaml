@@ -1,0 +1,7 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: baremetal-pool
+  namespace: metallb-system
+spec:
+  {{ .Values | toYaml | nindent 2 }} 
