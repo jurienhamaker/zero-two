@@ -40,7 +40,7 @@ resources:
     cpu: 500m
     memory: 250Mi
 log:
-  level: INFO
+  level: DEBUG
 accessLog:
     enabled: true
 ports:
