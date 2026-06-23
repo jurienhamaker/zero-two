@@ -1,0 +1,10 @@
+root = true
+
+[*.yaml]
+indent_style = space
+indent_size = 2
+
+[*.tpl]
+indent_style = space
+indent_size = 2
+
