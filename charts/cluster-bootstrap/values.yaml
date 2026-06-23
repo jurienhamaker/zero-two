@@ -1,0 +1,15 @@
+repoURL: https://github.com/jurienhamaker/zero-two.git
+targetRevision: HEAD
+
+argocd:
+  hostname: argocd.zero-two.xyz
+  traefikIngress:
+    enabled: true
+
+traefik:
+  enabled: true
+  domain: zero-two.xyz
+  clusterHostname: k8s.zero-two.xyz
+  dashboard:
+    enabled: true
+    hostname: traefik.zero-two.xyz

@@ -1,0 +1,95 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    name: in-cluster
+  project: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+  sources:
+    - chart: argo-cd
+      repoURL: https://argoproj.github.io/argo-helm
+      targetRevision: 9.4.4
+      helm:
+        values: |
+          global:
+            domain: {{ .Values.argocd.hostname }}
+          configs:
+            cm:
+              url: https://{{ .Values.argocd.hostname }}
+              accounts.crossplane: "apiKey"
+              application.resourceTrackingMethod: "annotation"
+              exec.enabled: "false"
+              # HACK: Workaround for post-delete finalizer to be synced away on apps.
+              # See: https://github.com/argoproj/argo-cd/issues/17433#issuecomment-1982910285
+              resource.customizations.ignoreDifferences.argoproj.io_Application: |
+                jqPathExpressions:
+                  - .metadata.finalizers[]? | select(. == "post-delete-finalizer.argocd.argoproj.io" or . == "post-delete-finalizer.argocd.argoproj.io/cleanup")
+                  - if (.metadata.finalizers | length) == 0 then .metadata.finalizers else empty end
+              resource.exclusions: |
+                ### Network resources created by the Kubernetes control plane and excluded to reduce the number of watched events and UI clutter
+                - apiGroups:
+                  - ''
+                  - discovery.k8s.io
+                  kinds:
+                  - Endpoints
+                  - EndpointSlice
+                ### Internal Kubernetes resources excluded reduce the number of watched events
+                - apiGroups:
+                  - coordination.k8s.io
+                  kinds:
+                  - Lease
+                ### Internal Kubernetes Authz/Authn resources excluded reduce the number of watched events
+                - apiGroups:
+                  - authentication.k8s.io
+                  - authorization.k8s.io
+                  kinds:
+                  - SelfSubjectReview
+                  - TokenReview
+                  - LocalSubjectAccessReview
+                  - SelfSubjectAccessReview
+                  - SelfSubjectRulesReview
+                  - SubjectAccessReview
+                ### Intermediate Certificate Request excluded reduce the number of watched events
+                - apiGroups:
+                  - certificates.k8s.io
+                  kinds:
+                  - CertificateSigningRequest
+                - apiGroups:
+                  - cert-manager.io
+                  kinds:
+                  - CertificateRequest
+            params:
+              application.namespaces: "argocd, zero-two, zero-two-*"
+              applicationsetcontroller.enable.policy.override: "true"
+              server.insecure: "true"
+              controller.sync.timeout.seconds: "1800" # 30 mins
+    - path: charts/argocd-resources
+      {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          {{ .Values.argocd | toYaml | nindent 10 }}
+          {{- if .Values.addons.traefik.enabled }}
+          traefikIngress:
+            enabled: true
+            {{- if .Values.addons.externalDns.enabled }}
+            annotations:
+              external-dns.alpha.kubernetes.io/hostname: {{ .Values.argocd.hostname }}
+              external-dns.alpha.kubernetes.io/target: {{ .Values.traefik.clusterHostname }}
+            {{- end }}
+            hosts:
+              - {{ .Values.argocd.hostname }}
+          {{- end }}
