@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: root-cert
+  namespace: cert-manager
+spec:
+  issuerRef:
+    kind: Issuer
+    name: root-issuer
+  secretName: root-cert
+  isCA: true
+  commonName: root.zero-two.xyz
+  duration: 87600h0m0s
+  renewBefore: 7320h0m0s
+  privateKey:
+    rotationPolicy: Always
+    algorithm: ECDSA
+    
+    

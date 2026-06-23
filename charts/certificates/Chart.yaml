@@ -1,0 +1,5 @@
+apiVersion: v2
+name: certficates
+description: Chart which provides all certificates for cluster components and bundles them together for trust-manager.
+type: application
+version: "0.1.0"
