@@ -1,0 +1,7 @@
+stores:
+  default:
+    provider: OnePasswordSDK
+    storeName: op-secret-store
+    tokenName: op-connect-token
+    providerParameters:
+      vault: "Zero-Two"

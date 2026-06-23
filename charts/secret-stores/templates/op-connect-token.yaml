@@ -1,0 +1,9 @@
+{{- range $secretName, $secret := .Values.stores }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $secret.tokenName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+---
+{{- end }}
