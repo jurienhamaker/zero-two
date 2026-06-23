@@ -1,0 +1,37 @@
+{{- if .Values.traefik.enabled -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: traefik
+    name: in-cluster
+  project: traefik
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+  sources:
+    - chart: traefik
+      repoURL: https://traefik.github.io/charts
+      targetRevision: "41.0.0"
+      helm:
+        releaseName: traefik
+        skipCrds: true
+        values: |
+          {{- include "traefik.values" . | nindent 10 }}
+    - path: charts/traefik-resources
+      {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          domain: {{ .Values.traefik.domain }}
+{{- end -}}
