@@ -26,7 +26,6 @@ spec:
       targetRevision: "41.0.0"
       helm:
         releaseName: traefik
-        skipCrds: true
         values: |
           {{- include "traefik.values" . | nindent 10 }}
     - path: charts/traefik-resources

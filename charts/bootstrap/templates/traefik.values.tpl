@@ -89,10 +89,6 @@ providers:
     publishedService:
       enabled: true
 service:
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: {{ .clusterHostname }}
-    loadbalancer.openstack.org/keep-floatingip: "true"
-    loadbalancer.openstack.org/enable-health-monitor: "true"
   spec:
     externalTrafficPolicy: Cluster
   # Cloudflare IP ranges: https://www.cloudflare.com/ips/
