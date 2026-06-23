@@ -12,19 +12,6 @@ deployment:
         items:
         - key: ca-bundle.crt
           path: ca-bundle.crt
-  podAnnotations:
-    ad.datadoghq.com/traefik.checks: |
-      {
-        "traefik": {
-          "instances": [
-            {
-              "openmetrics_endpoint": "http://%%host%%:8080/metrics"
-            }
-          ]
-        }
-      }
-    ad.datadoghq.com/traefik.logs: |
-      [{"source": "traefik", "service": "traefik"}]
 podDisruptionBudget:
   enabled: true
   minAvailable: 1
@@ -121,8 +108,6 @@ ingressRoute:
   {{- end }}
 metrics:
   prometheus: null
-  datadog:
-    address: $(HOST_IP):8125
 tracing:
   otlp:
     enabled: true
