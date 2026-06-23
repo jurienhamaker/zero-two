@@ -39,10 +39,9 @@ resources:
   limits:
     cpu: 500m
     memory: 250Mi
-logs:
-  general:
-    level: INFO
-  access:
+log:
+  level: INFO
+accessLog:
     enabled: true
 ports:
   web:

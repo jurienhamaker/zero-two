@@ -3,8 +3,6 @@ targetRevision: HEAD
 
 argocd:
   hostname: argocd.zero-two.xyz
-  traefikIngress:
-    enabled: true
 
 traefik:
   enabled: true

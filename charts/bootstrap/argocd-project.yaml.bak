@@ -16,5 +16,6 @@ spec:
     - namespace: argocd
       name: in-cluster
   sourceRepos:
-    - "https://argoproj.github.io/argo-helm"
+    #- "https://argoproj.github.io/argo-helm"
     - "{{ .Values.repoURL }}"
+
