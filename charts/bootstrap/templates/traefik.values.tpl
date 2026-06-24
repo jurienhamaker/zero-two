@@ -1,5 +1,7 @@
 {{- define "traefik.values" -}}
 {{- with .Values.traefik }}
+api:
+  insecure: true
 deployment:
   kind: Deployment
   replicas: 2
@@ -102,7 +104,7 @@ ingressRoute:
     enabled: {{ .enabled }}
     annotations:
       external-dns.alpha.kubernetes.io/target: {{ $clusterHostname }}
-    matchRule: Host(`{{ .hostname }}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+    #matchRule: Host(`{{ .hostname }}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
     entryPoints:
       - websecure
   {{- end }}
