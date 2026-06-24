@@ -3,20 +3,31 @@
 podDisruptionBudget:
   enabled: true
   minAvailable: 1
-additionalArguments:
-  - --entrypoints.websecure.http.tls.certresolver=cloudflare
-  - --entrypoints.websecure.http.tls.domains[0].main={{ .domain }}
-  - --entrypoints.websecure.http.tls.domains[0].sans=*.{{ .domain }} 
-  - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
-  - --certificatesresolvers.cloudflare.acme.email={{ .email }}
-  - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1
-  - --certificatesresolvers.cloudflare.acme.storage=/certs/acme.json
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: "{{ .email }}"
+      #caServer: https://acme-v02.api.letsencrypt.org/directory # Production server
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory # Staging server
+      dnsChallenge:
+        provider: cloudflare
+      storage: /data/acme.json
 persistence:
   enabled: true
   name: data
-  accessMode: ReadWriteOnce
-  size: 64Mi
+  accessMode: ReadWriteMany
+  storageClass: nfs-shared
+  size: 128Mi
   path: /data
+deployment:
+  initContainers:
+    - name: volume-permissions
+      image: busybox:latest
+      command: ["sh", "-c", "ls -la /; touch /data/acme.json; chmod -v 600 /data/acme.json"]
+      volumeMounts:
+      - mountPath: /data
+        name: data
+podSecurityContext: null
 resources:
   requests:
     cpu: 50m
