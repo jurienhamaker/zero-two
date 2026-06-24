@@ -16,7 +16,7 @@ persistence:
   enabled: true
   name: data
   accessMode: ReadWriteMany
-  storageClass: nfs-shared
+  storageClass: nfs-k8s
   size: 128Mi
   path: /data
 deployment:
