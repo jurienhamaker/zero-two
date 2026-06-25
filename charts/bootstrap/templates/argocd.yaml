@@ -31,14 +31,11 @@ spec:
       targetRevision: 9.7.0
       helm:
         values: |
-          #global:
-            #domain: {{ .Values.argocd.hostname }}
           secret:
             githubSecret: $github-webhook:token
           configs:
             cm:
-              #url: https://{{ .Values.argocd.hostname }}
-              exec.enabled: "false"
+              exec.enabled: "true"
             params:
               application.namespaces: "argocd, employes, employes-*"
               server.insecure: "true"
