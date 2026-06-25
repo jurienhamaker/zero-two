@@ -15,6 +15,7 @@ spec:
     - group: ""
       kind: Namespace
   sourceRepos:
+    - oci://ghcr.io/harish2k01/helm-charts/speedtest-tracker
     - {{ .Values.repoURL }}
 {{- end -}}
 
