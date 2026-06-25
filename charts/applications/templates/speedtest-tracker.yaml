@@ -39,4 +39,8 @@ spec:
                   paths:
                     - path: /
                       pathType: Prefix
+            persistence:
+              storageClassName: nfs-k8s
+    - path: charts/speedtest-tracker-resources
+      {{- include "infra-repository-values" . | nindent 6 }}
 {{ end }}
