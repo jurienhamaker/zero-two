@@ -28,17 +28,17 @@ spec:
       targetRevision: 0.1.3
       helm:
         values: |
+          ingress:
+            enabled: true
+            className: traefik
+            hosts:
+              - host: {{ .Values.speedtestTracker.hostname }} 
+                paths:
+                  - path: /
+                    pathType: Prefix
           speedtestTracker:
             secrets:
               existingSecret: speedtest-tracker-secret
-            ingress:
-              enabled: true
-              className: nginx
-              hosts:
-                - host: {{ .Values.speedtestTracker.hostname }} 
-                  paths:
-                    - path: /
-                      pathType: Prefix
             persistence:
               storageClassName: nfs-k8s
     - path: charts/speedtest-tracker-resources
