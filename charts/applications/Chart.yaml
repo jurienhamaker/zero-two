@@ -1,0 +1,5 @@
+apiVersion: v2
+name: applications
+description: Chart for bootstrapping the applications
+type: application
+version: 0.1.0
