@@ -35,7 +35,7 @@ spec:
             hosts:
               - host: {{ .hostname }} 
                 paths:
-                  - path: /
+                  - path: /web
                     pathType: Prefix
           speedtestTracker:
             secrets:
