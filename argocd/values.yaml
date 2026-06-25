@@ -1,0 +1,9 @@
+argo-cd:
+  configs:
+    cm:
+      exec.enabled: "false"
+    params:
+      application.namespaces: "argocd, employes, employes-*"
+      server.insecure: "true"
+      applicationsetcontroller.enable.policy.override: "true"
+      controller.sync.timeout.seconds: "1800" # 30 mins

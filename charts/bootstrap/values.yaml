@@ -1,9 +1,6 @@
 repoURL: https://github.com/jurienhamaker/zero-two.git
 targetRevision: HEAD
 
-argocd:
-  hostname: argocd.zero-two.xyz
-
 traefik:
   enabled: true
   domain: zero-two.xyz
@@ -12,3 +9,6 @@ traefik:
   dashboard:
     enabled: true
     hostname: traefik.zero-two.xyz
+
+argocd:
+  hostname: argocd.zero-two.xyz

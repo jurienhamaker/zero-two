@@ -1,3 +1,7 @@
 ### Helm template
 # Chart dependencies
 **/charts/*.tgz
+argocd/**/charts
+argocd/**/Chart.lock
+charts/**/charts
+charts/**/Chart.lock
