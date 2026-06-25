@@ -1,0 +1,5 @@
+sabnzbd:
+  enabled: true
+
+qbittorrent:
+  enabled: true

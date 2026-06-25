@@ -1,8 +1,8 @@
-{{- if .Values.enabled.applications }}
+{{- if .Values.enabled.arrStack }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications
+  name: arr-stack
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:

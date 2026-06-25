@@ -1,0 +1,5 @@
+tautulli:
+  enabled: true
+
+jellyfin:
+  enabled: true

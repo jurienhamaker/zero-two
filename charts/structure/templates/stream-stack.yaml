@@ -1,8 +1,8 @@
-{{- if .Values.enabled.applications }}
+{{- if .Values.enabled.streamStack }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: applications
+  name: stream-stack
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
@@ -12,7 +12,7 @@ spec:
   destination:
     namespace: zero-two
     name: in-cluster
-  project: applications
+  project: stream-stack
   syncPolicy:
     automated:
       prune: true
@@ -20,9 +20,6 @@ spec:
     syncOptions:
       - CreateNamespace=true
   sources:
-    - path: charts/applications  
+    - path: charts/stream-stack
       {{- include "infra-repository-values" . | nindent 6 }}
-      helm:
-        values: |
-          {{- include "infra-repository-values" . | nindent 10 }}
 {{- end }}

@@ -1,0 +1,5 @@
+apiVersion: v2
+name: arr-stack
+description: Chart for bootstrapping the arr-stack
+type: application
+version: 0.1.0

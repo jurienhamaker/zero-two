@@ -2,4 +2,7 @@ repoURL: ""
 targetRevision: HEAD
 
 helloWorld:
-  enabled: false
+  enabled: true
+
+speedTest:
+  enabled: true

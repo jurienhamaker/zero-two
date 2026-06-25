@@ -1,7 +1,9 @@
 repoURL: ""
 targetRevision: HEAD
 
-applications:
-  enabled: true
-  helloWorld:
-    enabled: true
+enabled:
+  applications: true
+  downloadStack: true
+  arrStack: true
+  streamStack: true
+  ebookStack: true

@@ -1,8 +1,8 @@
-{{- if .Values.enabled.applications }}
+{{- if .Values.enabled.ebookStack }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications
+  name: ebook-stack
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
