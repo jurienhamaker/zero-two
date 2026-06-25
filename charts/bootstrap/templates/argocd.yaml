@@ -1,0 +1,69 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    name: in-cluster
+  project: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+  sources:
+    - chart: argo-cd
+      repoURL: https://argoproj.github.io/argo-helm
+      targetRevision: 9.7.0
+      helm:
+        values: |
+          # global:
+          #  domain: {{ .Values.argocd.hostname }}
+          configs:
+            cm:
+              #url: https://{{ .Values.argocd.hostname }}
+              accounts.crossplane: "apiKey"
+              application.resourceTrackingMethod: "annotation"
+              exec.enabled: "false"
+              # HACK: Workaround for post-delete finalizer to be synced away on apps.
+              # See: https://github.com/argoproj/argo-cd/issues/17433#issuecomment-1982910285
+              resource.customizations.ignoreDifferences.argoproj.io_Application: |
+                jqPathExpressions:
+                  - .metadata.finalizers[]? | select(. == "post-delete-finalizer.argocd.argoproj.io" or . == "post-delete-finalizer.argocd.argoproj.io/cleanup")
+                  - if (.metadata.finalizers | length) == 0 then .metadata.finalizers else empty end
+              resource.customizations: |
+                argoproj.io/Application:
+                  health.lua: |
+                    hs = {}
+                    hs.status = "Progressing"
+                    hs.message = ""
+                    if obj.status ~= nil then
+                      if obj.status.health ~= nil then
+                        hs.status = obj.status.health.status
+                        if obj.status.health.message ~= nil then
+                          hs.message = obj.status.health.message
+                        end
+                      end
+                    end
+                    return hs
+            params:
+              application.namespaces: "argocd, zero-two, zero-two-*"
+              applicationsetcontroller.enable.policy.override: "true"
+              server.insecure: "true"
+              controller.sync.timeout.seconds: "1800" # 30 mins
+            rbac:
+              policy.csv: |
+                g, admin, role:admin
+    - path: charts/argocd-resources
+      {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          hostname: {{ .Values.argocd.hostname }}

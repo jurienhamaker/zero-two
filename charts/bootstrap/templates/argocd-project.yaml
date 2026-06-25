@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  clusterResourceWhitelist:
+    - kind: ClusterRole
+      group: rbac.authorization.k8s.io
+    - kind: ClusterRoleBinding
+      group: rbac.authorization.k8s.io
+    - kind: CustomResourceDefinition
+      group: apiextensions.k8s.io
+  destinations:
+    - namespace: argocd
+      name: in-cluster
+  sourceRepos:
+    - "https://argoproj.github.io/argo-helm"
+    - "{{ .Values.repoURL }}"
+
