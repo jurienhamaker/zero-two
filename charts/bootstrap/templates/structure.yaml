@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: applications
-  namespace: argocd
+  name: structure 
+  namespace: structure
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: applications
+    namespace: zero-two
     name: in-cluster
-  project: applications
+  project: structure
   syncPolicy:
     automated:
       prune: true
@@ -22,5 +22,5 @@ spec:
       - SkipDryRunOnMissingResource=true
       - ServerSideApply=true
   sources:
-    - path: charts/applications
+    - path: charts/structure 
       {{- include "infra-repository-values" . | nindent 6 }}

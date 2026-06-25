@@ -1,0 +1,31 @@
+{{- .Values.applications.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: applications
+  namespace: zero-two
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: applications
+    name: in-cluster
+  project: structure
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - path: charts/applications  
+      {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          {{ .Values.applications | toYaml | nindent 10 }}
+{{- end }

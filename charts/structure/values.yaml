@@ -1,0 +1,4 @@
+applications:
+  enabled: false
+  helloWorld:
+    enabled: true
