@@ -1,16 +1,20 @@
+{{- if .Values.applications.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: structure
-  namespace: argocd
+  name: applications
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
+  destinations:
+    - namespace: "zero-two"
+      name: in-cluster
+    - namespace: "argocd"
+      name: in-cluster
   clusterResourceWhitelist:
     - group: ""
       kind: Namespace
-  destinations:
-    - namespace: structure
-      name: in-cluster
   sourceRepos:
     - {{ .Values.repoURL }}
+{{- end -}}
+

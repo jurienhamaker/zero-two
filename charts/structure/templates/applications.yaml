@@ -3,25 +3,22 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: applications
-  namespace: zero-two
+  namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: applications
+    namespace: zero-two
     name: in-cluster
   project: structure
   syncPolicy:
     automated:
       prune: true
-      allowEmpty: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - SkipDryRunOnMissingResource=true
-      - ServerSideApply=true
   sources:
     - path: charts/applications  
       {{- include "infra-repository-values" . | nindent 6 }}
