@@ -9,7 +9,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: structure
+    namespace: argocd
     name: in-cluster
   project: structure
   syncPolicy:
@@ -24,3 +24,6 @@ spec:
   sources:
     - path: charts/structure 
       {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          {{- include "infra-repository-values" . | nindent 10 }}

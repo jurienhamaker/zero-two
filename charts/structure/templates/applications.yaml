@@ -1,4 +1,4 @@
-{{- .Values.applications.enabled }}
+{{- if .Values.applications.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -12,7 +12,7 @@ spec:
   destination:
     namespace: zero-two
     name: in-cluster
-  project: structure
+  project: applications
   syncPolicy:
     automated:
       prune: true
@@ -24,5 +24,6 @@ spec:
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
         values: |
+          {{- include "infra-repository-values" . | nindent 10 }}
           {{ .Values.applications | toYaml | nindent 10 }}
-{{- end }
+{{- end }}

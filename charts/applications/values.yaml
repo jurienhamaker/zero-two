@@ -1,2 +1,5 @@
+repoURL: ""
+targetRevision: HEAD
+
 helloWorld:
   enabled: false

@@ -1,4 +1,7 @@
+repoURL: ""
+targetRevision: HEAD
+
 applications:
-  enabled: false
+  enabled: true
   helloWorld:
     enabled: true

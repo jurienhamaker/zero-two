@@ -6,11 +6,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
-  clusterResourceWhitelist:
-    - group: ""
-      kind: Namespace
   destinations:
-    - namespace: structure
+    - namespace: argocd
       name: in-cluster
   sourceRepos:
     - {{ .Values.repoURL }}

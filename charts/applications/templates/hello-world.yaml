@@ -10,9 +10,9 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: hello-world
+    namespace: zero-two
     name: in-cluster
-  project: structure
+  project: applications
   syncPolicy:
     automated:
       prune: true
