@@ -7,3 +7,4 @@ helloWorld:
 speedtestTracker:
   enabled: true
   hostname: speed.zero-two.xyz
+  schedule: "0 */3 * * *"

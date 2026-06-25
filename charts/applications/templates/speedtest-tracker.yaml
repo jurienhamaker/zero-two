@@ -23,6 +23,7 @@ spec:
       - SkipDryRunOnMissingResource=true
       - ServerSideApply=true
   sources:
+{{- with .Values.speedtestTracker }}
     - chart: speedtest-tracker
       repoURL: oci://ghcr.io/harish2k01/helm-charts/speedtest-tracker
       targetRevision: 0.1.3
@@ -32,7 +33,7 @@ spec:
             enabled: true
             className: traefik
             hosts:
-              - host: {{ .Values.speedtestTracker.hostname }} 
+              - host: {{ .hostname }} 
                 paths:
                   - path: /
                     pathType: Prefix
@@ -41,8 +42,10 @@ spec:
               existingSecret: speedtest-tracker-secret
             env:
               APP_DEBUG: "true"
+              SPEEDTEST_SCHEDULE: {{ .schedule }}
             persistence:
               storageClassName: nfs-k8s
+{{- end }}
     - path: charts/speedtest-tracker-resources
       {{- include "infra-repository-values" . | nindent 6 }}
-{{ end }}
+{{- end }}
