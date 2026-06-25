@@ -7,15 +7,16 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   destinations:
+    - namespace: "argocd"
+      name: in-cluster
     - namespace: "zero-two"
       name: in-cluster
-    - namespace: "argocd"
+    - namespace: "speedtest-tracker"
       name: in-cluster
   clusterResourceWhitelist:
     - group: ""
       kind: Namespace
   sourceRepos:
-    - oci://ghcr.io/harish2k01/helm-charts/speedtest-tracker
     - {{ .Values.repoURL }}
 {{- end -}}
 

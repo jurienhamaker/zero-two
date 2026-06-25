@@ -1,0 +1,29 @@
+{{- if .Values.speedtestTracker.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: speedtest-tracker
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+  destinations:
+    - namespace: speedtest-tracker
+      name: in-cluster
+    - namespace: kube-system
+      name: in-cluster
+  sourceRepos:
+    - oci://ghcr.io/harish2k01/helm-charts/speedtest-tracker 
+    - {{ .Values.repoURL }}
+{{- end }}

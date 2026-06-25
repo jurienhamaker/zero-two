@@ -6,3 +6,4 @@ helloWorld:
 
 speedtestTracker:
   enabled: true
+  hostname: speed.zero-two.xyz

@@ -12,7 +12,7 @@ spec:
   destination:
     namespace: speedtest-tracker
     name: in-cluster
-  project: applications
+  project: speedtest-tracker
   syncPolicy:
     automated:
       prune: true
@@ -31,4 +31,12 @@ spec:
           speedtestTracker:
             secrets:
               existingSecret: speedtest-tracker-secret
+            ingress:
+              enabled: true
+              className: nginx
+              hosts:
+                - host: {{ .Values.speedtestTracker.hostname }} 
+                  paths:
+                    - path: /
+                      pathType: Prefix
 {{ end }}
