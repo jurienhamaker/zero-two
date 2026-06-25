@@ -7,8 +7,8 @@ certificatesResolvers:
   letsencrypt:
     acme:
       email: "{{ .email }}"
-      #caServer: https://acme-v02.api.letsencrypt.org/directory # Production server
-      caServer: https://acme-staging-v02.api.letsencrypt.org/directory # Staging server
+      caServer: https://acme-v02.api.letsencrypt.org/directory # Production server
+      #caServer: https://acme-staging-v02.api.letsencrypt.org/directory # Staging server
       dnsChallenge:
         provider: cloudflare
       storage: /data/acme.json
@@ -36,11 +36,12 @@ resources:
     cpu: 500m
     memory: 250Mi
 log:
-  level: INFO
+  level: DEBUG
 accessLog:
     enabled: true
 ports:
   web:
+    port: 80
     http:
       redirections:
         entryPoint:
@@ -51,6 +52,14 @@ ports:
       accessLogs: false
       metrics: false
       tracing: false
+  websecure:
+    http:
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: {{ .domain | quote }}
+            sans:
+            - "*.{{ .domain }}"
   postgres:
     expose:
       default: true
@@ -70,9 +79,7 @@ ingressRoute:
   {{- with .dashboard }}
   dashboard:
     enabled: {{ .enabled }}
-    annotations:
-      external-dns.alpha.kubernetes.io/target: {{ $clusterHostname }}
-    #matchRule: Host(`{{ .hostname }}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+    matchRule: Host(`{{ .hostname }}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
     entryPoints:
       - websecure
   {{- end }}
