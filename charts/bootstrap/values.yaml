@@ -12,3 +12,7 @@ traefik:
 
 argocd:
   hostname: argocd.zero-two.xyz
+
+longhorn:
+  enabled: true
+  hostname: longhorn.zero-two.xyz
