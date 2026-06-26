@@ -32,6 +32,16 @@ spec:
 
           radarr:
             enabled: {{ .Values.radarr.enabled }}
+            storage:
+              enabled: false
+            extraVolumes:
+              - name: nfs-media
+                nfs:
+                  server: {{ $.Values.nfs.server }}
+                  path: /mnt/zero-two/media
+            extraVolumeMounts:
+              - mountPath: /mnt/media
+                name: nfs-media
           
           prowlarr:
             enabled: {{ .Values.prowlarr.enabled }}
@@ -41,11 +51,19 @@ spec:
 
           sonarr:
             enabled: {{ .Values.sonarr.enabled }}
+            storage:
+              enabled: false
+            extraVolumes:
+              - name: nfs-media
+                nfs:
+                  server: {{ $.Values.nfs.server }}
+                  path: /mnt/zero-two/media
+            extraVolumeMounts:
+              - mountPath: /mnt/media
+                name: nfs-media
           
           postgresql:
             enabled: true
             persistence:
               enabled: true
-              size: 20Gi
-              storageClass: "nfs-k8s"
-          
+              size: 10Gi
