@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: preparr
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: preparr
+    name: in-cluster
+  project: preparr
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - chart: my-media-stack
+      repoURL: oci://ghcr.io/robbeverhelst/charts/preparr
+      targetRevision: 0.19.6
+      helm:
+        values: |
+          global:
+            namespace: preparr
+
+          radarr:
+            enabled: {{ .Values.radarr.enabled }}
+          
+          prowlarr:
+            enabled: {{ .Values.prowlarr.enabled }}
+          
+          qbittorrent:
+            enabled: {{ .Values.qbittorrent.enabled }}
+
+          sonarr:
+            enabled: {{ .Values.sonarr.enabled }}
+          
+          postgresql:
+            enabled: true
+            persistence:
+              enabled: true
+              size: 20Gi
+              storageClass: "nfs-k8s"
+          

@@ -1,8 +1,7 @@
-{{- if .Values.qbittorrent.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: qbittorrent
+  name: preparr 
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
@@ -19,10 +18,9 @@ spec:
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
   destinations:
-    - namespace: qbittorrent
+    - namespace: preparr
       name: in-cluster
     - namespace: kube-system
       name: in-cluster
   sourceRepos:
-    - https://charts.alekc.dev/alekc/qbittorrent
-{{- end }}
+    - oci://ghcr.io/robbeverhelst/charts/preparr
