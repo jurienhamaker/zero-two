@@ -1,0 +1,61 @@
+{{- if .Values.qbittorrent.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: qbitorrent
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: qbitorrent
+    name: in-cluster
+  project: qbitorrent
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+{{- with .Values.qbittorrent }}
+    - chart: alekc-charts/qbittorrent
+      repoURL: https://charts.alekc.dev/
+      targetRevision: 0.4.1
+      helm:
+        values: |
+          persistence:
+            vuetorrent:
+              enabled: true
+              type: emptyDir
+          autoscaling:
+            enabled: false
+            minReplicas: 1
+            maxReplicas: 5
+            targetCPUUtilizationPercentage: 80
+          ingress:
+            enabled: true
+            className: traefik
+            hosts:
+              - host: {{ .hostname }}
+                paths:
+                  - path: /
+                    pathType: Prefix
+          persistence:
+            additionalVolumes:
+              - name: nfs-media
+                nfs:
+                  server: {{ $.Values.nfs.server }}
+                  path: /mnt/zero-two/media
+            
+            additionalMounts:
+              - mountPath: /mnt/media
+                name: nfs-media
+{{- end }}
+{{- end }}
+
