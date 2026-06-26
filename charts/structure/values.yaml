@@ -3,7 +3,4 @@ targetRevision: HEAD
 
 enabled:
   applications: true
-  downloadStack: true
-  arrStack: true
-  streamStack: true
-  ebookStack: true
+  servarr: true

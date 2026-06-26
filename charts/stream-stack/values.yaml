@@ -1,5 +1,0 @@
-jellyfin:
-  enabled: false
-  hostname: jelly.zero-two.xyz
-  nfs:
-    server: 192.168.1.156

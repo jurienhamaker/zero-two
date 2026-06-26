@@ -1,13 +1,13 @@
-{{- if .Values.enabled.ebookStack }}
+{{- if .Values.enabled.servarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: ebook-stack
+  name: servarr-stack
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   destinations:
-    - namespace: "zero-two"
+    - namespace: "servarr-stack"
       name: in-cluster
     - namespace: "argocd"
       name: in-cluster

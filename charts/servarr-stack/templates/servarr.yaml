@@ -1,8 +1,7 @@
-{{- if .Values.enabled.arrStack }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: arr-stack
+  name: servarr
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
@@ -10,16 +9,19 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: zero-two
+    namespace: servarr
     name: in-cluster
-  project: arr-stack
+  project: servarr
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      allowEmpty: true
+      selfHeal: false
     syncOptions:
       - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
   sources:
-    - path: charts/arr-stack
-      {{- include "infra-repository-values" . | nindent 6 }}
-{{- end }}
+    - chart: servarr
+      repoURL: https://charts.kubito.dev/kubitodev/servarr
+      targetRevision: 1.5.2

@@ -1,5 +1,0 @@
-apiVersion: v2
-name: ebook-stack
-description: Chart for bootstrapping the ebook stack
-type: application
-version: 0.1.0

@@ -1,8 +1,8 @@
-{{- if .Values.enabled.streamStack }}
+{{- if .Values.enabled.servarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: stream-stack
+  name: servarr-stack
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
@@ -10,16 +10,20 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: zero-two
+    namespace: servarr-stack
     name: in-cluster
-  project: stream-stack
+  project: servarr-stack
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: false
+      selfHeal: false
+      allowEmpty: true
     syncOptions:
       - CreateNamespace=true
   sources:
-    - path: charts/stream-stack
+    - path: charts/servarr-stack
       {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          {{- include "infra-repository-values" . | nindent 10 }}
 {{- end }}
