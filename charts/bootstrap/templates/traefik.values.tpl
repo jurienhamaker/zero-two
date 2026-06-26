@@ -74,6 +74,17 @@ providers:
   kubernetesIngress:
     publishedService:
       enabled: true
+#  file:
+#    directory: /dynamic/
+#    watch: true
+#extraVolumes: |
+#  - name: dynamic
+#    hostPath:
+#      path: /dynamic
+#      type: DirectoryOrCreate
+#extraVolumeMounts: |
+#  - mountPath: /dynamic
+#    name: dynamic
 ingressRoute:
   {{- $clusterHostname := .clusterHostname }}
   {{- with .dashboard }}
