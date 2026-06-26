@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: qbitorrent
+  name: qbittorrent
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
@@ -19,11 +19,10 @@ spec:
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
   destinations:
-    - namespace: qbitorrent
+    - namespace: qbittorrent
       name: in-cluster
     - namespace: kube-system
       name: in-cluster
   sourceRepos:
-    - https://charts.alekc.dev/ 
-    - {{ .Values.repoURL }}
+    - https://charts.alekc.dev/alekc/qbittorrent
 {{- end }}

@@ -1,8 +1,9 @@
 {{- if .Values.qbittorrent.enabled }}
+{{- with .Values.qbittorrent }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: qbitorrent
+  name: qbittorrent
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
@@ -10,9 +11,9 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: qbitorrent
+    namespace: qbittorrent
     name: in-cluster
-  project: qbitorrent
+  project: qbittorrent
   syncPolicy:
     automated:
       prune: true
@@ -23,9 +24,8 @@ spec:
       - SkipDryRunOnMissingResource=true
       - ServerSideApply=true
   sources:
-{{- with .Values.qbittorrent }}
-    - chart: alekc-charts/qbittorrent
-      repoURL: https://charts.alekc.dev/
+    - chart: my-qbittorrent
+      repoURL: https://charts.alekc.dev/alekc/qbittorrent
       targetRevision: 0.4.1
       helm:
         values: |
