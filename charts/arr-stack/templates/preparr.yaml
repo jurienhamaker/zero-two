@@ -34,6 +34,8 @@ spec:
             enabled: {{ .Values.radarr.enabled }}
             storage:
               enabled: false
+              movies:
+                size: 1Mi
             extraVolumes:
               - name: nfs-media
                 nfs:
@@ -56,6 +58,8 @@ spec:
             enabled: {{ .Values.sonarr.enabled }}
             storage:
               enabled: false
+              tv:
+                size: 1Mi
             extraVolumes:
               - name: nfs-media
                 nfs:
