@@ -4,6 +4,6 @@ argo-cd:
       exec.enabled: "true"
     params:
       application.namespaces: "argocd, zero-two, zero-two-*"
-      server.insecure: "true"
+      #server.insecure: "true"
       applicationsetcontroller.enable.policy.override: "true"
       controller.sync.timeout.seconds: "1800" # 30 mins
