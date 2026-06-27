@@ -1,6 +1,9 @@
 repoURL: https://github.com/jurienhamaker/zero-two.git
 targetRevision: HEAD
 
+nfs:
+  server: 192.168.1.156
+
 applications:
   enabled: true
 

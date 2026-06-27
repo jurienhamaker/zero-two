@@ -27,3 +27,162 @@ spec:
       targetRevision: 1.5.2
       helm:
         releaseName: kubitodev
+        values: |
+          bazarr:
+            enabled: false
+          lidarr:
+            enabled: false
+          
+          jellyfin:
+            image:
+              tag: 10.11.11
+            ingress:
+              enabled: true
+              annotations:
+                kubernetes.io/ingress.class: traefik
+              hosts:
+                - {{ .Values.servarr.jellyfin.hostname }}
+            persistence:
+              config:
+                enabled: true
+                storageClass: nfs-k8s
+              media:
+                enabled: false
+              extraExistingClaimMounts:
+                - name: media-nfs
+                  existingClaim: servarr-media-pvc
+                  mountPath: /mnt/media
+                  readonly: false
+
+          sonarr:
+            image:
+              tag: latest
+            ingress:
+              enabled: true
+              annotations:
+                kubernetes.io/ingress.class: traefik
+              hosts:
+                - host: {{ .Values.servarr.sonarr.hostname }}
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+            persistence:
+              enabled: true
+              storageClass: nfs-k8s
+              additionalVolumes:
+                - name: media-nfs
+                  persistentVolumeClaim:
+                    claimName: servarr-media-pvc
+              additionalMounts:
+                - mountPath: /mnt/media
+                  name: media-nfs
+
+          radarr:
+            image:
+              tag: latest
+            ingress:
+              enabled: true
+              annotations:
+                kubernetes.io/ingress.class: traefik
+              hosts:
+                - host: {{ .Values.servarr.radarr.hostname }}
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+            persistence:
+              enabled: true
+              storageClass: nfs-k8s
+              additionalVolumes:
+                - name: media-nfs
+                  persistentVolumeClaim:
+                    claimName: servarr-media-pvc
+              additionalMounts:
+                - mountPath: /mnt/media
+                  name: media-nfs
+
+          prowlarr:
+            image:
+              tag: latest
+            ingress:
+              enabled: true
+              annotations:
+                kubernetes.io/ingress.class: traefik
+              hosts:
+                - host: {{ .Values.servarr.prowlarr.hostname }}
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+            persistence:
+              enabled: true
+              storageClass: nfs-k8s
+
+          flaresolverr:
+            image:
+              tag: latest
+
+          qbittorrent:
+            image:
+              tag: latest
+            ingress:
+              enabled: true
+              annotations:
+                kubernetes.io/ingress.class: traefik
+              hosts:
+                - host: {{ .Values.servarr.qbittorrent.hostname }}
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+            persistence:
+              enabled: true
+              storageClass: nfs-k8s
+              additionalVolumes:
+                - name: media-nfs
+                  persistentVolumeClaim:
+                    claimName: servarr-media-pvc
+              additionalMounts:
+                - mountPath: /mnt/media
+                  name: media-nfs
+
+          cleanuparr:
+            image:
+              tag: latest
+            ingress:
+              enabled: true
+              annotations:
+                kubernetes.io/ingress.class: traefik
+              hosts:
+                - host: {{ .Values.servarr.cleanuparr.hostname }}
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+            persistence:
+              enabled: true
+              storageClass: nfs-k8s
+              additionalVolumes:
+                - name: media-nfs
+                  persistentVolumeClaim:
+                    claimName: servarr-media-pvc
+              additionalMounts:
+                - mountPath: /mnt/media
+                  name: media-nfs
+
+          seerr:
+            image:
+              tag: latest
+            ingress:
+              enabled: true
+              annotations:
+                kubernetes.io/ingress.class: traefik
+              hosts:
+                - host: {{ .Values.servarr.seerr.hostname }}
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+            persistence:
+              enabled: true
+              storageClass: nfs-k8s
+    - path: charts/servarr-resources
+      {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          {{- .Values | toYaml | nindent 10 }}

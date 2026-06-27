@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: servarr-media-pvc
+  namespace: servarr
+spec:
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 5T
+  volumeName: servarr-media-pv
+  accessModes:
+    - ReadWriteMany

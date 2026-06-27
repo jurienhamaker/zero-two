@@ -1,6 +1,9 @@
 repoURL: ""
 targetRevision: HEAD
 
+nfs:
+  server: ""
+
 helloWorld:
   enabled: true
 
@@ -8,3 +11,19 @@ speedtestTracker:
   enabled: true
   hostname: speed.zero-two.xyz
   schedule: "0 */3 * * *"
+
+servarr:
+  jellyfin:
+    hostname: jelly.zero-two.xyz
+  seerr:
+    hostname: request.zero-two.xyz
+  radarr:
+    hostname: radarr.zero-two.xyz
+  sonarr:
+    hostname: sonarr.zero-two.xyz
+  qbittorrent:
+    hostname: torrent.zero-two.xyz
+  prowlarr:
+    hostname: prowlarr.zero-two.xyz
+  cleanuparr:
+    hostname: cleanup.zero-two.xyz

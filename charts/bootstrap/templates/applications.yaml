@@ -24,5 +24,7 @@ spec:
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
         values: |
+          nfs:
+            server: {{ .Values.nfs.server }}
           {{- include "infra-repository-values" . | nindent 10 }}
 {{- end }}
