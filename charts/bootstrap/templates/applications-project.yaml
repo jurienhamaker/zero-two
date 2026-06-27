@@ -1,4 +1,4 @@
-{{- if .Values.enabled.applications }}
+{{- if .Values.applications.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:

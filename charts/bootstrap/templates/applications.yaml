@@ -1,8 +1,8 @@
-{{- if .Values.enabled.servarr }}
+{{- if .Values.applications.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: servarr-stack
+  name: applications
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
@@ -10,18 +10,17 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: servarr-stack
+    namespace: zero-two
     name: in-cluster
-  project: servarr-stack
+  project: applications
   syncPolicy:
     automated:
-      prune: false
-      selfHeal: false
-      allowEmpty: true
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
   sources:
-    - path: charts/servarr-stack
+    - path: charts/applications  
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
         values: |

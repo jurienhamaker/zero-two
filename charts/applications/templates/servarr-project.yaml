@@ -15,4 +15,4 @@ spec:
     - group: ""
       kind: Namespace
   sourceRepos:
-    - https://charts.kubito.dev/kubitodev/servarr
+    - https://charts.kubito.dev

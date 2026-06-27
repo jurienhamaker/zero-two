@@ -1,8 +1,7 @@
-{{- if .Values.enabled.applications }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: applications
+  name: servarr
   namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
@@ -10,19 +9,21 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: zero-two
+    namespace: servarr
     name: in-cluster
-  project: applications
+  project: servarr
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      allowEmpty: true
+      selfHeal: false
     syncOptions:
       - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
   sources:
-    - path: charts/applications  
-      {{- include "infra-repository-values" . | nindent 6 }}
+    - chart: servarr
+      repoURL: https://charts.kubito.dev
+      targetRevision: 1.5.2
       helm:
-        values: |
-          {{- include "infra-repository-values" . | nindent 10 }}
-{{- end }}
+        releaseName: kubitodev
