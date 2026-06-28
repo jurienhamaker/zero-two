@@ -20,6 +20,7 @@ persistence:
   size: 128Mi
   path: /data
 deployment:
+  revisionHistoryLimit: 2
   initContainers:
     - name: volume-permissions
       image: busybox:latest
@@ -69,22 +70,16 @@ tlsOptions:
   default:
     minVersion: VersionTLS13
 providers:
+  file:
+    enabled: true
+    watch: true
+    content:
+      {{- .dynamic | toYaml | nindent 6 }}
   kubernetesGateway:
     enabled: false
   kubernetesIngress:
     publishedService:
       enabled: true
-#  file:
-#    directory: /dynamic/
-#    watch: true
-#extraVolumes: |
-#  - name: dynamic
-#    hostPath:
-#      path: /dynamic
-#      type: DirectoryOrCreate
-#extraVolumeMounts: |
-#  - mountPath: /dynamic
-#    name: dynamic
 ingressRoute:
   {{- $clusterHostname := .clusterHostname }}
   {{- with .dashboard }}

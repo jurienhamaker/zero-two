@@ -33,4 +33,6 @@ spec:
       helm:
         values: |
           domain: {{ .Values.traefik.domain }}
+          nfs:
+            server: {{ .Values.nfs.server }}
 {{- end -}}

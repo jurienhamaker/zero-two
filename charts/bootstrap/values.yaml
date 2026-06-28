@@ -15,6 +15,52 @@ traefik:
   dashboard:
     enabled: true
     hostname: traefik.zero-two.xyz
+  dynamic:
+    http:
+      serversTransports:
+        skipverify-https:
+          insecureSkipVerify: true
+
+      routers:
+        proxmox:
+          rule: "Host(`proxmox.zero-two.xyz`)"
+          entryPoints:
+            - websecure
+          service: proxmox
+        homeassistant:
+          rule: "Host(`home.zero-two.xyz`)"
+          entryPoints:
+            - websecure
+          service: homeassistant
+        pihole:
+          rule: "Host(`pihole.zero-two.xyz`)"
+          entryPoints:
+            - websecure
+          service: pihole
+        truenas:
+          rule: "Host(`nas.zero-two.xyz`)"
+          entryPoints:
+            - websecure
+          service: truenas
+
+      services:
+        proxmox:
+          loadBalancer:
+            servers:
+              - url: "https://192.168.1.150:8006"
+            serversTransport: skipverify-https
+        homeassistant:
+          loadBalancer:
+            servers:
+              - url: "http://192.168.1.155:8123"
+        pihole:
+          loadBalancer:
+            servers:
+              - url: "http://192.168.1.151"
+        truenas:
+          loadBalancer:
+            servers:
+              - url: "http://192.168.1.156"
 
 argocd:
   hostname: argocd.zero-two.xyz
