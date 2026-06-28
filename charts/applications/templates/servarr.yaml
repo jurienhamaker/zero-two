@@ -53,6 +53,13 @@ spec:
                   existingClaim: servarr-media-pvc
                   mountPath: /mnt/media
                   readonly: false
+            resources:
+              limits:
+                cpu: 6000m
+                memory: 10Gi
+              requests:
+                cpu: 1000m
+                memory: 2Gi
 
           sonarr:
             image:
