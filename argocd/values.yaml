@@ -1,4 +1,6 @@
 argo-cd:
+  global:
+    revisionHistoryLimit: 3
   configs:
     cm:
       exec.enabled: "true"

@@ -31,6 +31,8 @@ spec:
       targetRevision: 9.7.0
       helm:
         values: |
+          global:
+            revisionHistoryLimit: 3
           secret:
             githubSecret: $github-webhook:token
           configs:
