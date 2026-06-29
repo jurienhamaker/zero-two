@@ -188,6 +188,46 @@ spec:
             persistence:
               enabled: true
               storageClass: nfs-k8s
+    - path: .
+      repoURL: oci://oci.trueforge.org/truecharts/sabnzbd
+      targetRevision: 25.3.0
+      helm:
+        values: |
+          global:
+            fallbackDefaults:
+              storageClass: nfs-k8s
+
+          ingress:
+            main:
+              enabled: true
+              ingressClassName: traefik
+              hosts:
+                - host: {{ .Values.servarr.sabnzbd.hostname }}
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+              integrations:
+                traefik:
+                  enabled: true
+
+          persistence:
+            nfs-media:
+              enabled: true
+              type: pvc
+              mountPath: /mnt/media
+              targetSelectAll: true
+              static:
+                mode: nfs
+                share: "/mnt/zero-two/media"
+                server: {{ .Values.nfs.server | quote  }}
+
+          workload:
+            main:
+              podSpec:
+                containers:
+                  main:
+                    env:
+                      SABNZBD__HOST_WHITELIST_ENTRIES: "{{ .Values.servarr.sabnzbd.hostname }},servarr-sabnzbd"
     - path: charts/servarr-resources
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
