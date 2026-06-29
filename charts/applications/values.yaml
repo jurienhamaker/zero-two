@@ -27,3 +27,5 @@ servarr:
     hostname: prowlarr.zero-two.xyz
   cleanuparr:
     hostname: cleanup.zero-two.xyz
+  sabnzbd:
+    hostname: sabnzbd.zero-two.xyz

@@ -1,2 +1,6 @@
 nfs:
   server: ""
+
+servarr:
+  sabnzbd:
+    hostname: ""

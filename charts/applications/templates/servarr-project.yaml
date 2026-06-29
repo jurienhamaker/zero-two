@@ -18,4 +18,5 @@ spec:
       kind: PersistentVolume
   sourceRepos:
     - https://charts.kubito.dev
+    - oci://oci.trueforge.org/truecharts/sabnzbd 
     - {{ .Values.repoURL }}
