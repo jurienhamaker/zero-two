@@ -1,25 +1,25 @@
-{{- if .Values.applications.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications
+  name: homepage
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   destinations:
-    - namespace: "argocd"
-      name: in-cluster
-    - namespace: "zero-two"
-      name: in-cluster
-    - namespace: "speedtest-tracker"
-      name: in-cluster
     - namespace: "homepage"
+      name: in-cluster
+    - namespace: "argocd"
       name: in-cluster
   clusterResourceWhitelist:
     - group: ""
       kind: Namespace
+    - group: ""
+      kind: PersistentVolume
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
   sourceRepos:
+    - http://jameswynn.github.io/helm-charts
     - {{ .Values.repoURL }}
-{{- end -}}
-

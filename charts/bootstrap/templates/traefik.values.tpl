@@ -85,7 +85,7 @@ ingressRoute:
   {{- with .dashboard }}
   dashboard:
     enabled: {{ .enabled }}
-    matchRule: Host(`{{ .hostname }}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+    matchRule: (Host(`{{ .hostname }}`) || Host(`traefik.traefik.svc.cluster.local`)) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
     entryPoints:
       - websecure
   {{- end }}

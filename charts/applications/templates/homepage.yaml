@@ -1,0 +1,278 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homepage
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: homepage
+    name: in-cluster
+  project: homepage
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - chart: homepage
+      repoURL: http://jameswynn.github.io/helm-charts
+      targetRevision: 2.1.0
+      helm:
+        values: |
+          enableRbac: true
+
+          image:
+            tag: v1.13
+
+          ingress:
+            main:
+              enabled: true
+              labels:
+                gethomepage.dev/enabled: "true"
+              ingressClassName: "traefik"
+              hosts:
+                - host: {{ .Values.homepage.hostname }}
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific 
+
+
+          env:
+           - name: HOMEPAGE_ALLOWED_HOSTS
+             value: {{ .Values.homepage.hostname }} 
+           - name: HOMEPAGE_VAR_HOMEASSISTANT_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: homeassistant
+           - name: HOMEPAGE_VAR_PROXMOX_TOKEN_ID
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: proxmox-token-id
+           - name: HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: proxmox-token-secret
+           - name: HOMEPAGE_VAR_PIHOLE_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: pihole-key
+           - name: HOMEPAGE_VAR_TRUENAS_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: truenas-key
+           - name: HOMEPAGE_VAR_JELLYFIN_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: jellyfin-key
+           - name: HOMEPAGE_VAR_SABNZBD_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: sabnzbd-key
+           - name: HOMEPAGE_VAR_QBITTORRENT_USERNAME
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: qbittorrent-username
+           - name: HOMEPAGE_VAR_QBITTORRENT_PASSWORD
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: qbittorrent-password
+           - name: HOMEPAGE_VAR_PROWLARR_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: prowlarr-key
+           - name: HOMEPAGE_VAR_RADARR_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: radarr-key
+           - name: HOMEPAGE_VAR_SONARR_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: sonarr-key
+           - name: HOMEPAGE_VAR_SEERR_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: seerr-key
+
+          config:
+            bookmarks: []
+            services:
+              - Homelab:
+                - Proxmox:
+                    icon: proxmox.png
+                    href: https://proxmox.zero-two.xyz
+                    widget:
+                      type: proxmox
+                      url: https://192.168.1.150:8006
+                      username: "{{ `{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}` }}" 
+                      password: "{{ `{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}` }}" 
+                      node: zero-two
+                - pi-hole:
+                    icon: pi-hole.png
+                    href: https://pihole.zero-two.xyz
+                    widget:
+                      type: pihole
+                      url: http://192.168.1.151
+                      version: 6 
+                      key: "{{ `{{HOMEPAGE_VAR_PIHOLE_KEY}}` }}"
+                - TrueNas:
+                    icon: truenas.png
+                    href: https://nas.zero-two.xyz
+                    widget:
+                      type: truenas
+                      url: http://192.168.1.156
+                      version: 2 
+                      key: "{{ `{{HOMEPAGE_VAR_TRUENAS_KEY}}` }}"
+                - Traefik:
+                    icon: traefik.png
+                    href: https://traefik.zero-two.xyz
+                    widget:
+                      type: traefik
+                      url: https://traefik.traefik.svc.cluster.local
+
+              - Media:
+                  - Jellyfin:
+                      - Jellyfin:
+                          icon: jellyfin.png
+                          href: https://jelly.zero-two.xyz
+                          widget:
+                            type: jellyfin
+                            url: http://kubitodev-jellyfin.servarr.svc.cluster.local:8096
+                            key: "{{ `{{HOMEPAGE_VAR_JELLYFIN_KEY}}` }}"
+                            version: 2
+                            enableBlocks: true
+                            enableNowPlaying: true
+                            enableUser: true
+                            enableMediaControl: false
+                            showEpisodeNumber: true
+                            expandOneStreamToTwoRows: false
+                      - Seerr:
+                          icon: seerr.png
+                          href: https://request.zero-two.xyz
+                          widget:
+                            type: seerr
+                            url: http://kubitodev-seerr.servarr.svc.cluster.local:5055
+                            key: "{{ `{{HOMEPAGE_VAR_SEERR_KEY}}` }}" 
+                  - Arr:
+                      - Prowlarr:
+                          icon: prowlarr.png
+                          href: https://prowlarr.zero-two.xyz
+                          widget:
+                            type: prowlarr
+                            url: http://kubitodev-prowlarr.servarr.svc.cluster.local:9696
+                            key: "{{ `{{HOMEPAGE_VAR_PROWLARR_KEY}}` }}" 
+                      - Sonarr:
+                          icon: sonarr.png
+                          href: https://prowlarr.zero-two.xyz
+                          widget:
+                            type: sonarr
+                            url: http://kubitodev-sonarr.servarr.svc.cluster.local
+                            key: "{{ `{{HOMEPAGE_VAR_SONARR_KEY}}` }}" 
+                            enableQueue: true
+                      - Radarr:
+                          icon: radarr.png
+                          href: https://radarr.zero-two.xyz
+                          widget:
+                            type: radarr
+                            url: http://kubitodev-radarr.servarr.svc.cluster.local:7878
+                            key: "{{ `{{HOMEPAGE_VAR_RADARR_KEY}}` }}" 
+                            enableQueue: true
+                  - Downloaders:
+                      - SabNZBD:
+                          icon: sabnzbd.png
+                          href: https://sabnzbd.zero-two.xyz
+                          widget:
+                            type: sabnzbd
+                            url: http://servarr-sabnzbd.servarr.svc.cluster.local:10097
+                            key: "{{ `{{HOMEPAGE_VAR_SABNZBD_KEY}}` }}"
+                      - qBittorrent:
+                          icon: qbittorrent.png
+                          href: https://torrent.zero-two.xyz
+                          widget:
+                            type: qbittorrent
+                            url: http://kubitodev-qbittorrent-web.servarr.svc.cluster.local:8080
+                            username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}` }}"
+                            password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}` }}"
+
+
+
+            kubernetes:
+                mode: 'cluster'
+                ingress: true
+                gateway: true
+                traefik: true
+
+            widgets:
+              - kubernetes:
+                  cluster:
+                    show: true
+                    cpu: true
+                    memory: true
+                    showLabel: true
+                    label: "zero-two-cluster"
+                  nodes:
+                    show: true
+                    cpu: true
+                    memory: true
+                    showLabel: true
+              - openmeteo:
+                  label: Home
+                  latitude: 52.3702
+                  longitude: 4.8952
+                  timezone: Europe/Amsterdam # optional
+                  units: metric # or imperial
+                  cache: 5 # Time in minutes to cache API responses, to stay within limits
+                  format: # optional, Intl.NumberFormat options
+                    maximumFractionDigits: 1
+
+            settings:
+              title: Zero-Two
+              background: "https://i.pinimg.com/1200x/d1/b8/4d/d1b84d734786a38c5565b47aeb5e69dd.jpg"
+              cardBlur: xs
+              theme: dark
+              color: slate
+              hideVersion: true
+              showStats: true
+              disableIndexing: true
+              target: _blank
+
+              layout:
+                - Homelab:
+                    style: row
+                    columns: 4
+                - Media:
+                    Jellyfin:
+                      header: false
+                      style: row
+                      columns: 2
+                    Arr:
+                      header: false
+                      style: row
+                      columns: 3
+                    Downloaders:
+                      header: false
+                      style: row
+                      columns: 2
+
+    - path: charts/homepage-resources
+      {{- include "infra-repository-values" . | nindent 6 }}

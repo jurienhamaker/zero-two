@@ -4,13 +4,13 @@ targetRevision: HEAD
 nfs:
   server: ""
 
-helloWorld:
-  enabled: true
-
 speedtestTracker:
   enabled: true
   hostname: speed.zero-two.xyz
   schedule: "0 */3 * * *"
+
+homepage:
+  hostname: homepage.zero-two.xyz
 
 servarr:
   jellyfin:
