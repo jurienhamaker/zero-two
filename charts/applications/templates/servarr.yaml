@@ -36,6 +36,7 @@ spec:
           jellyfin:
             image:
               tag: 10.11.11
+            enableDLNA: true
             ingress:
               enabled: true
               annotations:
