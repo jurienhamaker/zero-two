@@ -32,6 +32,10 @@ spec:
               ingressClassName: traefik
               hosts:
                 - {{ $.Values.prometheus.grafana.hostname }}
+            admin:
+              existingSecret: "grafana-credentials"
+              userKey: username
+              passwordKey: password
 
     - path: charts/resources/prometheus
       {{- include "infra-repository-values" . | nindent 6 }}
