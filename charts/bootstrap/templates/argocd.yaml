@@ -43,7 +43,7 @@ spec:
               server.insecure: "true"
               applicationsetcontroller.enable.policy.override: "true"
               controller.sync.timeout.seconds: "1800" # 30 mins
-    - path: charts/argocd-resources
+    - path: charts/resources/argocd
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
         values: |

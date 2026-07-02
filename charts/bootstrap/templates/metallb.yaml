@@ -26,5 +26,5 @@ spec:
       targetRevision: "0.16.1"
       helm:
         releaseName: metallb
-    - path: charts/metallb-resources
+    - path: charts/resources/metallb
       {{- include "infra-repository-values" . | nindent 6 }}

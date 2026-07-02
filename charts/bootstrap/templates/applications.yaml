@@ -12,7 +12,7 @@ spec:
   destination:
     namespace: zero-two
     name: in-cluster
-  project: applications
+  project: default
   syncPolicy:
     automated:
       prune: true

@@ -12,7 +12,7 @@ spec:
   destination:
     namespace: speedtest-tracker
     name: in-cluster
-  project: speedtest-tracker
+  project: default
   syncPolicy:
     automated:
       prune: true
@@ -47,6 +47,6 @@ spec:
             persistence:
               storageClassName: nfs-k8s
 {{- end }}
-    - path: charts/speedtest-tracker-resources
+    - path: charts/resources/speedtest-tracker
       {{- include "infra-repository-values" . | nindent 6 }}
 {{- end }}

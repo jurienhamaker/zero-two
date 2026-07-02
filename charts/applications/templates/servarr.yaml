@@ -11,7 +11,7 @@ spec:
   destination:
     namespace: servarr
     name: in-cluster
-  project: servarr
+  project: default
   syncPolicy:
     automated:
       prune: true
@@ -233,7 +233,7 @@ spec:
       helm:
         values: |
           hostname: {{ .Values.servarr.calibreWeb.hostname }}
-    - path: charts/servarr-resources
+    - path: charts/resources/servarr
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
         values: |

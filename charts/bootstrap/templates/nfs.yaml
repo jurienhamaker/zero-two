@@ -27,5 +27,5 @@ spec:
       targetRevision: "4.9.0"
       helm:
         releaseName: nfs
-    - path: charts/nfs-resources
+    - path: charts/resources/nfs
       {{- include "infra-repository-values" . | nindent 6 }}

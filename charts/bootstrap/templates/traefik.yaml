@@ -28,7 +28,7 @@ spec:
         releaseName: traefik
         values: |
           {{- include "traefik.values" . | nindent 10 }}
-    - path: charts/traefik-resources
+    - path: charts/resources/traefik
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
         values: |

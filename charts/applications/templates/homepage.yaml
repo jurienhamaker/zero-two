@@ -11,7 +11,7 @@ spec:
   destination:
     namespace: homepage
     name: in-cluster
-  project: homepage
+  project: default
   syncPolicy:
     automated:
       prune: true
@@ -274,5 +274,5 @@ spec:
                       style: row
                       columns: 2
 
-    - path: charts/homepage-resources
+    - path: charts/resources/homepage
       {{- include "infra-repository-values" . | nindent 6 }}
