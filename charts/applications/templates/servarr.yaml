@@ -228,6 +228,11 @@ spec:
                   main:
                     env:
                       SABNZBD__HOST_WHITELIST_ENTRIES: "{{ .Values.servarr.sabnzbd.hostname }},servarr-sabnzbd"
+    - path: charts/calibre-web-automated
+      {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          hostname: {{ .Values.servarr.calibreWeb.hostname }}
     - path: charts/servarr-resources
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:

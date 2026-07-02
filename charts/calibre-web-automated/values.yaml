@@ -1,0 +1,4 @@
+hostname: "calibre.zero-two.xyz"
+
+nfs:
+  server: ""

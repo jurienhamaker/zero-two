@@ -29,3 +29,5 @@ servarr:
     hostname: cleanup.zero-two.xyz
   sabnzbd:
     hostname: sabnzbd.zero-two.xyz
+  calibreWeb:
+    hostname: calibre.zero-two.xyz
