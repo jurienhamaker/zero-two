@@ -33,4 +33,5 @@ servarr:
     hostname: calibre.zero-two.xyz
 
 prometheus:
-  hostname: prometheus.zero-two.xyz
+  grafana:
+    hostname: grafana.zero-two.xyz

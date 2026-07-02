@@ -27,29 +27,11 @@ spec:
       helm:
         values: |
           grafana:
-            enabled: false
-
-          kubeProxy:
-            enabled: false
-
-          prometheus:
-            agentMode: true
-
             ingress:
               enabled: true
               ingressClassName: traefik
               hosts:
-                - {{ $.Values.prometheus.hostname }}
+                - {{ $.Values.prometheus.grafana.hostname }}
 
-            prometheusSpec:
-              remoteWrite:
-                - url: http://openobserve.openobserve.svc.cluster.local/api/default/prometheus/api/v1/write
-                  basicAuth:
-                    username:
-                      name: openobserve-credentials
-                      key: username
-                    password:
-                      name: openobserve-credentials
-                      key: password
     - path: charts/resources/prometheus
       {{- include "infra-repository-values" . | nindent 6 }}
