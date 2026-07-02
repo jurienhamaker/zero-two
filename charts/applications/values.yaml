@@ -31,3 +31,6 @@ servarr:
     hostname: sabnzbd.zero-two.xyz
   calibreWeb:
     hostname: calibre.zero-two.xyz
+
+prometheus:
+  hostname: prometheus.zero-two.xyz
