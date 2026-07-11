@@ -1,0 +1,26 @@
+common:
+  name: "reddit-autoposter"
+  image:
+    repository: ghcr.io/jurienhamaker/reddit-autoposter
+    tag: latest
+    pullPolicy: IfNotPresent
+  configMap:
+    enabled: true
+    data:
+      - name: "config"
+        mountPath: "/"
+        data:
+          - content:
+              config.toml: |
+                version = 1.1
+  startupProbeEnabled: false
+  startupProbe: {}
+  readinessProbeEnabled: false
+  readinessProbe: {}
+  livenessProbeEnabled: false
+  livenessProbe: {}
+  persistence:
+    enabled: true
+    volumes: []
+  ingress:
+    enabled: false
