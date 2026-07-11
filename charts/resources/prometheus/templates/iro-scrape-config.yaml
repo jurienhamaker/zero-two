@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: iro-scrape-config
+  labels:
+    release: prometheus
+spec:
+  metricsPath: /api/metrics
+  scrapeInterval: 1m
+  staticConfigs:
+    - labels:
+        job: iro
+      targets:
+        - iro-api.yugen.bot
