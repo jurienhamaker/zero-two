@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reddit-autoposter-{{ .Values.name }}
+spec:
+  selector:
+    matchLabels:
+      app: reddit-autoposter-{{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: reddit-autoposter-{{ .Values.name }}
+    spec:
+      containers:
+        - name: reddit-autoposter-{{ .Values.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ENV
+              value: production
+            - name: CONFIG_FILE_PATH
+              value: /config/config.toml
+            - name: GO_REDDIT_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: reddit-autoposter-{{ .Values.name }}-config
+                  key: clientId
+            - name: GO_REDDIT_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: reddit-autoposter-{{ .Values.name }}-config
+                  key: clientSecret
+            - name: GO_REDDIT_CLIENT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: reddit-autoposter-{{ .Values.name }}-config
+                  key: username
+            - name: GO_REDDIT_CLIENT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: reddit-autoposter-{{ .Values.name }}-config
+                  key: password
+          volumeMounts:
+            - mountPath: /config/
+              name: config-volume
+              readOnly: true
+      volumes:
+        - name: config-volume
+          secret:
+            secretName: reddit-autoposter-{{ .Values.name }}-config

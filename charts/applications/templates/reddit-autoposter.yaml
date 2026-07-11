@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: reddit-autoposter
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - list:
+      elements:
+      {{ .Values.redditAutoposter | toYaml | nindent 6 }}
+  template:
+    metadata:
+      name: "{{`reddit-autoposter-{{.name}}`}}"
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: .
+    spec:
+      project: default
+      sources:
+      - repoURL: {{ .Values.repoURL }}
+        targetRevision: {{ .Values.targetRevision }}
+        path: charts/reddit-autoposter
+        helm:
+          values: |
+            name: {{`{{.name}}`}}
+      destination:
+        name: in-cluster
+        namespace: reddit-autoposter
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          allowEmpty: true
+          selfHeal: true

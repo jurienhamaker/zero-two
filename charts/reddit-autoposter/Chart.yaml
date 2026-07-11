@@ -3,7 +3,3 @@ name: reddit-autoposter
 description: Chart for my own reddit-autoposter.
 type: application
 version: "0.1.0"
-dependencies:
-  - name: common
-    repository: https://rubxkube.github.io/common-charts
-    version: v0.6.0

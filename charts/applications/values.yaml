@@ -35,3 +35,6 @@ servarr:
 prometheus:
   grafana:
     hostname: grafana.zero-two.xyz
+
+redditAutoposter:
+  - name: elysium
