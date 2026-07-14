@@ -22,7 +22,7 @@ spec:
         - env:
             - name: TZ
               value: Europe/Amsterdam
-          image: crocodilestick/calibre-web-automated:latest
+          image: crocodilestick/calibre-web-automated:v4.0.6
           imagePullPolicy: Always #Always enables updates with a rollout restart
           name: calibre-web-automated
           ports:
