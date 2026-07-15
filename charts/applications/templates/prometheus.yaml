@@ -36,6 +36,9 @@ spec:
               existingSecret: "grafana-credentials"
               userKey: username
               passwordKey: password
+            persistence:
+              enabled: true
+              storageClassName: "nfs-k8s"
 
     - path: charts/resources/prometheus
       {{- include "infra-repository-values" . | nindent 6 }}
