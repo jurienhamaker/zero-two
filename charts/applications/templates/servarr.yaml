@@ -35,6 +35,8 @@ spec:
           jellyfin:
             image:
               tag: 10.11.11
+            env:
+              TZ: "Europe/Amsterdam"
             enableDLNA: true
             ingress:
               enabled: true
@@ -64,6 +66,8 @@ spec:
           sonarr:
             image:
               tag: 4.0.19
+            env:
+              TZ: "Europe/Amsterdam"
             ingress:
               enabled: true
               annotations:
@@ -87,6 +91,8 @@ spec:
           radarr:
             image:
               tag: 6.3.0
+            env:
+              TZ: "Europe/Amsterdam"
             ingress:
               enabled: true
               annotations:
@@ -110,6 +116,8 @@ spec:
           prowlarr:
             image:
               tag: 2.5.1-develop
+            env:
+              TZ: "Europe/Amsterdam"
             ingress:
               enabled: true
               annotations:
@@ -126,10 +134,15 @@ spec:
           flaresolverr:
             image:
               tag: v3.5.0
+            env:
+              TZ: "Europe/Amsterdam"
 
           qbittorrent:
             image:
               tag: 5.2.3
+            env:
+              TZ: "Europe/Amsterdam"
+              DOCKER_MODS: "ghcr.io/gabe565/linuxserver-mod-vuetorrent"
             ingress:
               enabled: true
               annotations:
@@ -154,6 +167,8 @@ spec:
             enabled: false
             image:
               tag: 2.9.16
+            env:
+              TZ: "Europe/Amsterdam"
             ingress:
               enabled: true
               annotations:
@@ -177,6 +192,8 @@ spec:
           seerr:
             image:
               tag: v3.3.0
+            env:
+              TZ: "Europe/Amsterdam"
             ingress:
               enabled: true
               annotations:
@@ -194,6 +211,8 @@ spec:
       targetRevision: 25.3.0
       helm:
         values: |
+          TZ: "Europe/Amsterdam"
+
           global:
             fallbackDefaults:
               storageClass: nfs-k8s
