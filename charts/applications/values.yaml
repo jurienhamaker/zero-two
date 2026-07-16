@@ -10,7 +10,12 @@ speedtestTracker:
   schedule: "0 */3 * * *"
 
 homepage:
+  enabled: false
   hostname: homepage.zero-two.xyz
+
+glance:
+  enabled: true
+  hostname: glance.zero-two.xyz
 
 servarr:
   jellyfin:

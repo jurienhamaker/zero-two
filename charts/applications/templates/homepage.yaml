@@ -1,3 +1,4 @@
+{{- if .Values.homepage.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -276,3 +277,4 @@ spec:
 
     - path: charts/resources/homepage
       {{- include "infra-repository-values" . | nindent 6 }}
+{{- end }}

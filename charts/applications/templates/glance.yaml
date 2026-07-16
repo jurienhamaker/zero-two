@@ -1,3 +1,4 @@
+{{- if .Values.glance.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -55,7 +56,7 @@ spec:
 
             ingress:
               ingressClassName: "traefik"
-              hostName: glance.zero-two.xyz
+              hostName: {{ .Values.glance.hostname }}
             
             configMap:
               data:
@@ -907,3 +908,4 @@ spec:
 
     - path: charts/resources/glance
       {{- include "infra-repository-values" . | nindent 6 }}
+{{- end }}
