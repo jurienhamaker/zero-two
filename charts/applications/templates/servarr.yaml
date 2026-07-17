@@ -47,7 +47,7 @@ spec:
             persistence:
               config:
                 enabled: true
-                storageClass: nfs-k8s
+                size: 3Gi
               media:
                 enabled: false
               extraExistingClaimMounts:
@@ -79,7 +79,6 @@ spec:
                       pathType: ImplementationSpecific
             persistence:
               enabled: true
-              storageClass: nfs-k8s
               additionalVolumes:
                 - name: media-nfs
                   persistentVolumeClaim:
@@ -104,7 +103,6 @@ spec:
                       pathType: ImplementationSpecific
             persistence:
               enabled: true
-              storageClass: nfs-k8s
               additionalVolumes:
                 - name: media-nfs
                   persistentVolumeClaim:
@@ -129,7 +127,6 @@ spec:
                       pathType: ImplementationSpecific
             persistence:
               enabled: true
-              storageClass: nfs-k8s
 
           flaresolverr:
             image:
@@ -154,7 +151,6 @@ spec:
                       pathType: ImplementationSpecific
             persistence:
               enabled: true
-              storageClass: nfs-k8s
               additionalVolumes:
                 - name: media-nfs
                   persistentVolumeClaim:
@@ -180,7 +176,6 @@ spec:
                       pathType: ImplementationSpecific
             persistence:
               enabled: true
-              storageClass: nfs-k8s
               additionalVolumes:
                 - name: media-nfs
                   persistentVolumeClaim:
@@ -203,19 +198,19 @@ spec:
                   paths:
                     - path: /
                       pathType: ImplementationSpecific
+            podSecurity:
+              fsGroup: 0
+            securityContext:
+              runAsNonRoot: false
+              runAsUser: 0
             persistence:
               enabled: true
-              storageClass: nfs-k8s
     - path: .
       repoURL: oci://oci.trueforge.org/truecharts/sabnzbd
       targetRevision: 25.3.0
       helm:
         values: |
           TZ: "Europe/Amsterdam"
-
-          global:
-            fallbackDefaults:
-              storageClass: nfs-k8s
 
           ingress:
             main:
