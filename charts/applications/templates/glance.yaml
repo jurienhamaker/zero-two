@@ -82,13 +82,6 @@ spec:
                             `}}
                           branding:
                             hide-footer: true
-                            custom-footer: | {{`
-                              <script>
-                                if (pageData.slug === 'home') {
-                                  setTimeout(() => location.reload(), 60 * 1000);
-                                }
-                              </script>
-                            `}}
 
                           theme:
                             disable-picker: true
