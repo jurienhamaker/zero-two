@@ -253,3 +253,12 @@ spec:
       helm:
         values: |
           {{- .Values | toYaml | nindent 10 }}
+    - path: charts/fladder
+      {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          jellyfinUrl: {{ .Values.servarr.jellyfin.hostname }}
+          seerrUrl: {{ .Values.servarr.seerr.hostname }}
+
+          ingress:
+            hostname: {{ .Values.servarr.fladder.hostname }}

@@ -1,0 +1,15 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Values.name }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`{{ .Values.ingress.hostname }}`)
+      kind: Rule
+      services:
+        - name: {{ .Values.name }}
+          port: 8080
+{{- end }}

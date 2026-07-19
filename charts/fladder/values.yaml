@@ -1,0 +1,13 @@
+name: fladder
+
+jellyfinUrl: ""
+seerrUrl: ""
+
+ingress:
+  enabled: true
+  hostname: ""
+
+image:
+  repository: ghcr.io/donutware/fladder-rootless
+  pullPolicy: IfNotPresent
+  tag: "v0.10.3"

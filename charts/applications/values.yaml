@@ -36,6 +36,8 @@ servarr:
     hostname: sabnzbd.zero-two.xyz
   calibreWeb:
     hostname: calibre.zero-two.xyz
+  fladder:
+    hostname: fladder.zero-two.xyz
 
 prometheus:
   grafana:
