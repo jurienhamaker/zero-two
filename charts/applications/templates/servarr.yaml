@@ -47,7 +47,7 @@ spec:
             persistence:
               config:
                 enabled: true
-                size: 3Gi
+                size: 24Gi
               media:
                 enabled: false
               extraExistingClaimMounts:
