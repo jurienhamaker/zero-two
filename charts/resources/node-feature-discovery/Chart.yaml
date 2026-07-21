@@ -1,0 +1,4 @@
+apiVersion: v2
+name: node-feature-discovery-resources
+type: application
+version: "0.1.0"

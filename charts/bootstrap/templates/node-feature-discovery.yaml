@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: node-feature-discovery
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: node-feature-discovery
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - path: .
+      repoURL: oci://registry.k8s.io/nfd/charts/node-feature-discovery
+      targetRevision: "0.18.3"
+    - chart: intel-device-plugins-operator
+      repoURL: https://intel.github.io/helm-charts
+      targetRevision: "0.36.0"
+    - chart: intel-device-plugins-gpu
+      repoURL: https://intel.github.io/helm-charts
+      targetRevision: "0.36.0"
+      helm:
+        values: |
+          sharedDevNum: 1
+          
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: 'true'
+
+nodeFeatureRule: true
+    {{/* - path: charts/resources/node-feature-discovery */}}
+    {{/*   {{- include "infra-repository-values" . | nindent 6 }} */}}
