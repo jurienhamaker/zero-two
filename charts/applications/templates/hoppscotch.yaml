@@ -1,0 +1,55 @@
+{{- if .Values.glance.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hoppscotch
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: hoppscotch
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - chart: hoppscotch
+      repoURL: https://hoppscotch.github.io/helm-charts
+      targetRevision: 0.5.1
+      helm:
+        values: |
+          aio:
+            ingress:
+              enabled: true
+              hostname: {{ .Values.hoppscotch.hostname }}
+              ingressClassName: "traefik"
+
+          persistence:
+            enabled: true
+            storageClass: nfs-k8s
+
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: true
+
+          postgresql:
+            enabled: true
+            auth:
+              username: hoppscotch
+              password: ""
+              database: hoppscotch
+
+          redis:
+            enabled: true
+{{- end }}

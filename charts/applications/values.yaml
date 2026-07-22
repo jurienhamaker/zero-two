@@ -17,6 +17,10 @@ glance:
   enabled: true
   hostname: glance.zero-two.xyz
 
+hoppscotch:
+  enabled: true
+  hostname: hopp.zero-two.xyz
+
 servarr:
   jellyfin:
     hostname: jelly.zero-two.xyz
