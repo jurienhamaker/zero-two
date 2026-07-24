@@ -1,0 +1,33 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: operator-oauth
+  namespace: tailscale
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  refreshInterval: 24h0m0s
+  secretStoreRef:
+    name: op-secret-store
+    kind: ClusterSecretStore
+  target:
+    name: operator-oauth
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/part-of: argocd
+    creationPolicy: Owner
+  data:
+  - secretKey: client_id
+    remoteRef:
+      key: "tailscale/client_id"
+      conversionStrategy: Default
+      metadataPolicy: None
+      decodingStrategy: None
+  - secretKey: client_secret
+    remoteRef:
+      key: "tailscale/client_secret"
+      conversionStrategy: Default
+      metadataPolicy: None
+      decodingStrategy: None
+
