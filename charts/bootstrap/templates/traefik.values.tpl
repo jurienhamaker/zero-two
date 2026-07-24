@@ -43,6 +43,8 @@ accessLog:
 ports:
   web:
     port: 80
+    expose:
+      tailscale: true
     http:
       redirections:
         entryPoint:
@@ -54,6 +56,8 @@ ports:
       metrics: false
       tracing: false
   websecure:
+    expose:
+      tailscale: true
     http:
       tls:
         certResolver: letsencrypt
@@ -108,5 +112,17 @@ env:
       secretKeyRef:
         key: apiKey
         name: cloudflare-api-credentials
+
+service:
+    additionalServices:
+      tailscale:
+        labels:
+          traefik-service-label: tailscale
+        annotations:
+          tailscale.com/expose: "true"
+          tailscale.com/proxy-group: "default"
+        spec:
+          type: LoadBalancer
+          loadBalancerClass: tailscale
 {{- end }}
 {{- end -}}
