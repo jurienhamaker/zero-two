@@ -71,3 +71,4 @@ argocd:
 
 longhorn:
   enabled: true
+  hostname: longhorn.zero-two.xyz

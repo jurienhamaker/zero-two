@@ -25,6 +25,10 @@ spec:
         values: |
           preUpgradeChecker:
             jobEnabled: false
+          ingress:
+            enabled: true
+            ingressClassName: "traefik"
+            host: {{ .Values.longhorn.hostname }}
   destination:
     server: https://kubernetes.default.svc
     namespace: longhorn-system
