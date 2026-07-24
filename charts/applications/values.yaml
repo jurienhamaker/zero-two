@@ -18,7 +18,7 @@ glance:
   hostname: glance.zero-two.xyz
 
 hoppscotch:
-  enabled: true
+  enabled: false
   hostname: hopp.zero-two.xyz
 
 servarr:
