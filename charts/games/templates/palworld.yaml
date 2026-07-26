@@ -49,6 +49,7 @@ spec:
               COMMUNITY_SERVER: true
               SERVER_NAME: Barteng Pals
               SERVER_DESCRIPTION: Barteng palworld server for the boys
+              PUBLIC_IP: "95.98.253.163"
 
             secretEnv:
               create: false
