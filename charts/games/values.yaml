@@ -1,0 +1,5 @@
+nfs:
+  server: ""
+
+palworld:
+  enabled: true

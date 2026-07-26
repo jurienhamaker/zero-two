@@ -1,0 +1,46 @@
+{{- if .Values.palworld.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: palworld
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: palworld
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - chart: palworld
+      repoURL: https://korax-dev.github.io/helm-charts
+      targetRevision: 0.2.3
+      helm:
+        values: |
+          service:
+            annotations:
+              metallb.io/loadBalancerIPs: 192.168.1.185
+
+          persistence:
+            storageClass: nfs-k8s
+
+          config:
+            env:
+              TZ: Europe/Amsterdam
+              COMMUNITY_SERVER: true
+              SERVER_NAME: Barteng Pals
+              SERVER_DESCRIPTION: Barteng palworld server for the boys
+
+            
+{{- end }}

@@ -1,0 +1,30 @@
+{{- if .Values.games.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: games
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: zero-two
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - path: charts/games
+      {{- include "infra-repository-values" . | nindent 6 }}
+      helm:
+        values: |
+          nfs:
+            server: {{ .Values.nfs.server }}
+          {{- include "infra-repository-values" . | nindent 10 }}
+{{- end }}
