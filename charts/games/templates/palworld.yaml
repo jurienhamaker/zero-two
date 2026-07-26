@@ -42,5 +42,11 @@ spec:
               SERVER_NAME: Barteng Pals
               SERVER_DESCRIPTION: Barteng palworld server for the boys
 
+            secretEnv:
+              create: false
+              name: palworld-secrets
+
+    - path: charts/resources/palworld
+      {{- include "infra-repository-values" . | nindent 6 }}
             
 {{- end }}

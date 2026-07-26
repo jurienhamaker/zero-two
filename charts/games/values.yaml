@@ -1,3 +1,6 @@
+repoURL: ""
+targetRevision: HEAD
+
 nfs:
   server: ""
 
