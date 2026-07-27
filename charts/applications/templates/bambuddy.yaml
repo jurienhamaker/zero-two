@@ -1,0 +1,49 @@
+{{- if .Values.bambuddy.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bambuddy
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: bambuddy
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - chart: bambuddy
+      repoURL: https://npelikan.github.io/bambuddy-helm
+      targetRevision: 0.1.2
+      helm:
+        values: |
+          hostNetwork:  true
+
+          image:
+            tag: 1.2.5.1
+
+          config:
+            tz: "Europe/Amsterdam"
+
+          ingress:
+            enabled: true
+            className: traefik
+            hosts:
+              - host: {{ .Values.bambuddy.hostname }}
+                paths:
+                  - path: /
+                    pathType: Prefix
+
+{{- end }}
+

@@ -1,0 +1,10 @@
+{{- if .Values.bambuddy.enabled }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bambuddy
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+{{- end }}

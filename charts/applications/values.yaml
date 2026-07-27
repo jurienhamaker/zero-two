@@ -47,5 +47,9 @@ prometheus:
   grafana:
     hostname: grafana.zero-two.xyz
 
+bambuddy:
+  enabled: true
+  hostname: bambuddy.zero-two.xyz
+
 redditAutoposter:
   - name: elysium
