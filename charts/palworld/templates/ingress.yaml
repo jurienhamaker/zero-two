@@ -1,0 +1,15 @@
+{{- if .Values.panel.enabled -}}
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "palworld.fullname" . }}-panel
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`{{ .Values.panel.hostname }}`)
+      kind: Rule
+      services:
+        - name: {{ include "palworld.fullname" . }} 
+          port: {{ .Values.panel.port }}
+{{- end }}

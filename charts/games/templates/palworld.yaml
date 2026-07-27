@@ -23,14 +23,16 @@ spec:
       - SkipDryRunOnMissingResource=true
       - ServerSideApply=true
   sources:
-    - chart: palworld
-      repoURL: https://korax-dev.github.io/helm-charts
-      targetRevision: 0.2.3
+    - path: charts/palworld
+      {{- include "infra-repository-values" . | nindent 6 }}
       helm:
         values: |
           service:
             annotations:
               metallb.io/loadBalancerIPs: 192.168.1.185
+
+          image:
+            tag: 47248a2
 
           persistence:
             storageClass: nfs-k8s
@@ -43,19 +45,30 @@ spec:
               cpu: 2000m
               memory: 8Gi
 
+          panel:
+            enabled: true
+            expose: true
+            hostname: {{ .Values.palworld.hostname }}
+
           config:
             env:
               TZ: Europe/Amsterdam
               COMMUNITY_SERVER: true
-              SERVER_NAME: Barteng Pals
-              SERVER_DESCRIPTION: Barteng palworld server for the boys
-              PUBLIC_IP: "95.98.253.163"
+              SERVER_NAME: {{ .Values.palworld.name }}
+              SERVER_DESCRIPTION: {{ .Values.palworld.description }}
+              PUBLIC_IP: {{ .Values.palworld.publicIP | quote }}
 
-            secretEnv:
-              create: false
-              name: palworld-secrets
+              DIFFICULTY: Normal
+              EXP_RATE: 1.25
+              PAL_SPAWN_NUM_RATE: 1.1
+              PLAYER_STOMACH_DECREASE_RATE: 0.9
+              PLAYER_STAMINA_DECREACE_RATE: 0.9
+              PLAYER_AUTO_HP_REGENE_RATE: 1.2
+              ENEMY_DROP_ITEM_RATE: 1.2
+              WORK_SPEED_RATE: 1.2
 
-    - path: charts/resources/palworld
-      {{- include "infra-repository-values" . | nindent 6 }}
-            
+              {{- if .Values.palworld.discordWebHook }}
+              DISCORD_STATUS_ENABLED:  true
+              DISCORD_STATUS_WEBHOOK_URL: {{ .Values.palworld.discordWebHook }}
+              {{- end }}
 {{- end }}

@@ -1,0 +1,8 @@
+apiVersion: v2
+name: palworld
+version: 0.1.0
+description: Palworld Helm chart for Kubernetes
+sources:
+  - https://github.com/korax-dev/helm-charts
+  - https://github.com/jammsen/docker-palworld-dedicated-server
+appVersion: "latest"

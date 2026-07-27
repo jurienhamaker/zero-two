@@ -6,3 +6,8 @@ nfs:
 
 palworld:
   enabled: true
+  hostname: palworld.zero-two.xyz
+  name: Barteng Pals
+  description: Barteng palworld server for the boys
+  publicIP: 95.98.253.163
+  discordWebHook: https://discord.com/api/webhooks/1531562031994372216/Q-M8OFgA3rAA-QkM5HK_1y3MPm78VkuqIjlataiK98HM3loRjjhHiPzKF8uwzSH4vAhA
