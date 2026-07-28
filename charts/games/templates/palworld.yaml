@@ -58,6 +58,8 @@ spec:
               SERVER_DESCRIPTION: {{ .Values.palworld.description }}
               PUBLIC_IP: {{ .Values.palworld.publicIP | quote }}
 
+              BACKUP_RETENTION_AMOUNT_TO_KEEP: 4
+
               DIFFICULTY: Normal
               EXP_RATE: 1.25
               PAL_SPAWN_NUM_RATE: 1.1
