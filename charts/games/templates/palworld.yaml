@@ -60,6 +60,9 @@ spec:
 
               BACKUP_RETENTION_AMOUNT_TO_KEEP: 4
 
+              RESTART_ENABLED:  true
+              RESTART_CRON_EXPRESSION: 0 5 * * *
+
               DIFFICULTY: Normal
               EXP_RATE: 1.25
               PAL_SPAWN_NUM_RATE: 1.1
