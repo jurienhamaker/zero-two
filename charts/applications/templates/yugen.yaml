@@ -1,0 +1,103 @@
+{{- if .Values.yugen.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: yugen
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: yugen
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - chart: yugen
+      repoURL: https://charts.yugen.bot
+      targetRevision: 0.1.17
+      helm:
+        values: |
+          global:
+            config:
+              OWNER_ID: "256474214272335872"
+            postgresql:
+              auth:
+                existingSecret: postgres-secrets
+                secretKeys:
+                adminPasswordKey: "postgres-password"
+                userPasswordKey: "password"
+
+          postgresql:
+            auth:
+              usePasswordFiles: false
+              existingSecret: postgres-secrets
+              secretKeys:
+                adminPasswordKey: "postgres-password"
+                userPasswordKey: "password"
+
+          kusari:
+            enabled: false
+            secrets:
+              existingSecret: kusari-secrets
+
+          koto:
+            enabled: false
+            secrets:
+              existingSecret: koto-secrets
+
+          kazu:
+            enabled: false
+            secrets:
+              existingSecret: kazu-secrets
+
+          hoshi:
+            enabled: true
+            secrets:
+              existingSecret: hoshi-secrets
+            config:
+              SYNC_COMMANDS: "true"
+              DISCORD_APP_ID: "1208707396399267881"
+            ingress:
+              enabled: true
+              className: traefik
+              hosts:
+                - host: {{ .Values.yugen.hostnames.hoshi }}
+                  paths:
+                    - path: /
+                      pathType: Prefix
+
+          hachimitsu:
+            enabled: false
+            secrets:
+              existingSecret: hachimitsu-secrets
+
+          iro:
+            enabled: true
+            secrets:
+              existingSecret: iro-secrets
+            config:
+              SYNC_COMMANDS: "true"
+              DISCORD_APP_ID: "1305247349702135908"
+            ingress:
+              enabled: true
+              className: traefik
+              hosts:
+                - host: {{ .Values.yugen.hostnames.iro }}
+                  paths:
+                    - path: /
+                      pathType: Prefix
+
+    - path: charts/resources/yugen
+      {{- include "infra-repository-values" . | nindent 6 }}
+{{- end }}

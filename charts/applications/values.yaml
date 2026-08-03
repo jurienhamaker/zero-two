@@ -53,3 +53,13 @@ bambuddy:
 
 redditAutoposter:
   - name: elysium
+
+yugen:
+  enabled: true
+  hostnames:
+    kusari: kusari.zero-two.xyz
+    koto: koto.zero-two.xyz
+    kazu: kazu.zero-two.xyz
+    hoshi: hoshi.zero-two.xyz
+    hachimitsu: hachimitsu.zero-two.xyz
+    iro: iro.zero-two.xyz
