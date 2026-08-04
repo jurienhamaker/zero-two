@@ -138,7 +138,7 @@ spec:
                       pathType: Prefix
 
           hachimitsu:
-            enabled: false
+            enabled: true
             secrets:
               existingSecret: hachimitsu-secrets
             config:
