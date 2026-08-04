@@ -1,0 +1,64 @@
+{{- if .Values.muse.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: muse
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: muse
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - path: charts/muse
+      repoURL: https://github.com/elysium-stack/muse.git 
+      targetRevision: HEAD
+      helm:
+        values: |
+          image:
+            tag: sha-ae73d31
+
+          config:
+            OWNER_IDS: "256474214272335872"
+            DEVELOPMENT_LOG_CHANNEL_ID: "1121023706853031988"
+            DISCORD_OAUTH_CALLBACK_URL: {{ .Values.muse.hostnames }}
+            DISCORD_OAUTH_CLIENT_ID: "1096889146775195780"
+            DISCORD_OAUTH_SCOPES: "identify,guilds"
+            MUSIC_BOT_HOSTS: ""
+
+          secrets:
+            existingSecret: muse-secrets
+
+          postgresql:
+            auth:
+              usePasswordFiles: false
+              existingSecret: postgres-secrets
+              secretKeys:
+                adminPasswordKey: "postgres-password"
+                userPasswordKey: "password"
+
+          ingress:
+            enabled: true
+            className: traefik
+            hosts:
+              - host: {{ .Values.muse.hostname }}
+                paths:
+                  - path: /
+                    pathType: Prefix
+
+    - path: charts/resources/muse
+      {{- include "infra-repository-values" . | nindent 6 }}
+{{- end }}

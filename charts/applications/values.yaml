@@ -63,3 +63,7 @@ yugen:
     hoshi: hoshi.zero-two.xyz
     hachimitsu: hachimitsu.zero-two.xyz
     iro: iro.zero-two.xyz
+
+muse:
+  enabled: true
+  hostname: muse-api.the-river-styx.com
