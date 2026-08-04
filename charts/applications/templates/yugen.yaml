@@ -30,7 +30,10 @@ spec:
         values: |
           global:
             config:
-              OWNER_ID: "256474214272335872"
+              OWNER_IDS: "256474214272335872"
+              DISCORD_DEVELOPMENT_GUILD_ID: "1164669271310356507"
+              DISCORD_LOGS_REPORT_CHANNEL_ID: "1165002458133708842"
+              DISCORD_VOTE_REPORT_CHANNEL_ID:  "1165693413614682192"
             postgresql:
               auth:
                 existingSecret: postgres-secrets
@@ -50,24 +53,81 @@ spec:
             enabled: false
             secrets:
               existingSecret: kusari-secrets
+            config:
+              SYNC_COMMANDS: "true"
+              DISCORD_APP_ID: "1186650405703262208"
+              SHARD: "true"
+              INVITE_LINK: "https://invite-kusari.yugen.bot"
+              TOP_GG_SYNC: "true"
+              TOP_GG_VOTE_LINK: "https://top.gg/bot/1186650405703262208/vote"
+              DISCORDBOTLIST_SYNC: "true"
+              DISCORDBOTLIST_VOTE_LINK: "https://discordbotlist.com/bots/kusari/upvote"
+            ingress:
+              enabled: true
+              className: traefik
+              hosts:
+                - host: {{ .Values.yugen.hostnames.kusari }}
+                  paths:
+                    - path: /
+                      pathType: Prefix
 
           koto:
             enabled: false
             secrets:
               existingSecret: koto-secrets
+            config:
+              SYNC_COMMANDS: "true"
+              DISCORD_APP_ID: "1164654805730472018"
+              SHARD: "true"
+              INVITE_LINK: "https://invite-koto.yugen.bot"
+              TOP_GG_SYNC: "true"
+              TOP_GG_VOTE_LINK: "https://top.gg/bot/1164654805730472018/vote"
+              DISCORDBOTLIST_SYNC: "true"
+              DISCORDBOTLIST_VOTE_LINK: "https://discordbotlist.com/bots/koto/upvote"
+            ingress:
+              enabled: true
+              className: traefik
+              hosts:
+                - host: {{ .Values.yugen.hostnames.koto }}
+                  paths:
+                    - path: /
+                      pathType: Prefix
 
           kazu:
             enabled: false
             secrets:
               existingSecret: kazu-secrets
+            config:
+              SYNC_COMMANDS: "true"
+              DISCORD_APP_ID: "1260679337594589356"
+              SHARD: "false"
+              INVITE_LINK: "https://invite-kazu.yugen.bot"
+              TOP_GG_SYNC: "true"
+              TOP_GG_VOTE_LINK: "https://top.gg/bot/1260679337594589356/vote"
+              DISCORDBOTLIST_SYNC: "true"
+              DISCORDBOTLIST_VOTE_LINK: "https://discordbotlist.com/bots/kazu/upvote"
+            ingress:
+              enabled: true
+              className: traefik
+              hosts:
+                - host: {{ .Values.yugen.hostnames.kazu }}
+                  paths:
+                    - path: /
+                      pathType: Prefix
 
           hoshi:
-            enabled: true
+            enabled: false
             secrets:
               existingSecret: hoshi-secrets
             config:
               SYNC_COMMANDS: "true"
-              DISCORD_APP_ID: "1208707396399267881"
+              DISCORD_APP_ID: "1208707348659445800"
+              SHARD: "false"
+              INVITE_LINK: "https://invite-hoshi.yugen.bot"
+              TOP_GG_SYNC: "true"
+              TOP_GG_VOTE_LINK: "https://top.gg/bot/1208707348659445800/vote"
+              DISCORDBOTLIST_SYNC: "true"
+              DISCORDBOTLIST_VOTE_LINK: "https://discordbotlist.com/bots/hoshi-8125/upvote"
             ingress:
               enabled: true
               className: traefik
@@ -81,6 +141,23 @@ spec:
             enabled: false
             secrets:
               existingSecret: hachimitsu-secrets
+            config:
+              SYNC_COMMANDS: "true"
+              DISCORD_APP_ID: "1523707144644464831"
+              SHARD: "false"
+              INVITE_LINK: "https://invite-hachimitsu.yugen.bot"
+              TOP_GG_SYNC: "true"
+              TOP_GG_VOTE_LINK: "https://top.gg/bot/1523707144644464831/vote"
+              DISCORDBOTLIST_SYNC: "true"
+              DISCORDBOTLIST_VOTE_LINK: "https://discordbotlist.com/bots/hachimitsu/upvote"
+            ingress:
+              enabled: true
+              className: traefik
+              hosts:
+                - host: {{ .Values.yugen.hostnames.hachimitsu }}
+                  paths:
+                    - path: /
+                      pathType: Prefix
 
           iro:
             enabled: true
@@ -89,6 +166,7 @@ spec:
             config:
               SYNC_COMMANDS: "true"
               DISCORD_APP_ID: "1305247349702135908"
+              SHARD: "false"
             ingress:
               enabled: true
               className: traefik

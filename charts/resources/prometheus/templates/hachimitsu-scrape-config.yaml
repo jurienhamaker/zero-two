@@ -11,4 +11,4 @@ spec:
     - labels:
         job: hachimitsu
       targets:
-        - hachimitsu-api.yugen.bot
+        - http://yugen-hachimitsu.yugen.svc.cluster.local
