@@ -36,7 +36,3 @@ spec:
           
           nodeSelector:
             intel.feature.node.kubernetes.io/gpu: 'true'
-
-nodeFeatureRule: true
-    {{/* - path: charts/resources/node-feature-discovery */}}
-    {{/*   {{- include "infra-repository-values" . | nindent 6 }} */}}
