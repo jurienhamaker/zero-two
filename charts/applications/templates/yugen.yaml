@@ -72,7 +72,7 @@ spec:
                       pathType: Prefix
 
           koto:
-            enabled: false
+            enabled: true
             secrets:
               existingSecret: koto-secrets
             config:
