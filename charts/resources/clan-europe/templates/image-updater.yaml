@@ -1,0 +1,15 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: clan-europe-image-updater
+  namespace: argocd
+spec:
+  applicationRefs:
+    - namePattern: "clan-europe"
+      images:
+        - alias: "bot"
+          imageName: "ghcr.io/clan-europe/bot:main"
+        - alias: "event"
+          imageName: "ghcr.io/clan-europe/event:main"
+        - alias: "pocketbase"
+          imageName: "ghcr.io/clan-europe/pocketbase:main"

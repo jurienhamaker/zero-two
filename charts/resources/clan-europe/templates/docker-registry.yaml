@@ -1,0 +1,30 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: docker-registry
+  namespace: clan-europe 
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  refreshInterval: 24h0m0s
+  secretStoreRef:
+    name: op-secret-store
+    kind: ClusterSecretStore
+  target:
+    name: docker-registry
+    template:
+      type: kubernetes.io/dockerconfigjson
+      engineVersion: v2
+      data:
+        .dockerconfigjson: "{{ `{{ .dockerconfig }}` }}"
+      metadata:
+        labels:
+          app.kubernetes.io/part-of: argocd
+    creationPolicy: Owner
+  data:
+  - secretKey: dockerconfig
+    remoteRef:
+      key: "github-registry/dockerconfig"
+      conversionStrategy: Default
+      metadataPolicy: None
+      decodingStrategy: None

@@ -78,3 +78,8 @@ sairo:
   endpoint: https://e2b82da1b0b20a7dd92c493d61915fbb.r2.cloudflarestorage.com
   hostnames:
     - files.zero-two.xyz
+
+clanEurope:
+  enabled: true
+  hostnames:
+    pocketbase: pb.claneurope.cc

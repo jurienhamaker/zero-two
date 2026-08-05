@@ -1,0 +1,79 @@
+{{- if .Values.clanEurope.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: clan-europe
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: clan-europe
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - chart: go-bots
+      repoURL: https://charts.claneurope.cc
+      targetRevision: 0.1.6
+      helm:
+        values: |
+          bot:
+            imagePullSecrets:
+              - name: docker-registry
+            secrets:
+              existingSecret: bot-secrets
+            config:
+              SYNC_COMMANDS: "true"
+              POCKETBASE_URL: "https://pb.claneurope.cc"
+              POCKETBASE_EMAIL: "superuser@claneurope.cc"
+              DISCORD_APP_ID: "1478879150466138182"
+              DISCORD_DEVELOPMENT_GUILD_ID: "1164669271310356507"
+              DISCORD_LOGS_REPORT_CHANNEL_ID: "1517606780186919036"
+              OWNER_IDS: "256474214272335872"
+              R2_ACCOUNT_ID: "e2b82da1b0b20a7dd92c493d61915fbb"
+              R2_FILES_BUCKET: "claneurope-r2"
+              CDN_URL: "https://cdn.claneurope.cc"
+
+          event:
+            imagePullSecrets:
+              - name: docker-registry
+            secrets:
+              existingSecret: event-secrets
+            config:
+              SYNC_COMMANDS: "true"
+              POCKETBASE_URL: "https://pb.claneurope.cc"
+              POCKETBASE_EMAIL: "superuser@claneurope.cc"
+              DISCORD_APP_ID: "1517586783011995659"
+              DISCORD_DEVELOPMENT_GUILD_ID: "1164669271310356507"
+              DISCORD_LOGS_REPORT_CHANNEL_ID: "1517606780186919036"
+              OWNER_IDS: "256474214272335872"
+              R2_ACCOUNT_ID: "e2b82da1b0b20a7dd92c493d61915fbb"
+              R2_FILES_BUCKET: "claneurope-r2"
+              CDN_URL: "https://cdn.claneurope.cc"
+
+          pocketbase:
+            imagePullSecrets:
+              - name: docker-registry
+            ingress:
+              enabled: true
+              className: traefik
+              hosts:
+                - host: {{ .Values.clanEurope.hostnames.pocketbase }}
+                  paths:
+                    - path: /
+                      pathType: Prefix
+
+    - path: charts/resources/clan-europe
+      {{- include "infra-repository-values" . | nindent 6 }}
+{{- end }}
