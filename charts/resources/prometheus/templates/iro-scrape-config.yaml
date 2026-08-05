@@ -11,4 +11,4 @@ spec:
     - labels:
         job: iro
       targets:
-        - http://yugen-iro.yugen.svc.cluster.local
+        - yugen-iro.yugen.svc.cluster.local

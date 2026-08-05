@@ -11,4 +11,4 @@ spec:
     - labels:
         job: muse
       targets:
-        - muse-api.the-river-styx.com
+        - muse.muse.svc.cluster.local

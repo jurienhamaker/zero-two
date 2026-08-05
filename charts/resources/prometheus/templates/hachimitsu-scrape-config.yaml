@@ -11,4 +11,4 @@ spec:
     - labels:
         job: hachimitsu
       targets:
-        - http://yugen-hachimitsu.yugen.svc.cluster.local
+        - yugen-hachimitsu.yugen.svc.cluster.local
