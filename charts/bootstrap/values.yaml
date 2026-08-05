@@ -19,6 +19,7 @@ traefik:
     - zero-two.xyz
     - the-river-styx.com
     - yugen.bot
+    - claneurope.cc
   email: whoami@jurien.dev
   clusterHostname: k8s.zero-two.xyz
   dashboard:
