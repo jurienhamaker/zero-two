@@ -58,7 +58,7 @@ spec:
                 userPasswordKey: "password"
 
           kusari:
-            enabled: false
+            enabled: true
             secrets:
               existingSecret: kusari-secrets
             config:
