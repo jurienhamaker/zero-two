@@ -11,4 +11,4 @@ spec:
     - labels:
         job: hoshi
       targets:
-        - hoshi-api.yugen.bot
+        - yugen-hoshi.yugen.svc.cluster.local

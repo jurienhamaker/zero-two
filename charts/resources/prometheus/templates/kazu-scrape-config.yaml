@@ -11,4 +11,4 @@ spec:
     - labels:
         job: kazu
       targets:
-        - kazu-api.yugen.bot
+        - yugen-kazu.yugen.svc.cluster.local

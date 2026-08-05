@@ -11,4 +11,4 @@ spec:
     - labels:
         job: kusari
       targets:
-        - kusari-api.yugen.bot
+        - yugen-kusari.yugen.svc.cluster.local
