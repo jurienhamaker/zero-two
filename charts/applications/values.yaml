@@ -57,12 +57,12 @@ redditAutoposter:
 yugen:
   enabled: true
   hostnames:
-    kusari: kusari.zero-two.xyz
-    koto: koto.zero-two.xyz
-    kazu: kazu.zero-two.xyz
-    hoshi: hoshi.zero-two.xyz
-    hachimitsu: hachimitsu.zero-two.xyz
-    iro: iro.zero-two.xyz
+    kusari: kusari-api.yugen.bot
+    koto: koto-api.yugen.bot
+    kazu: kazu-api.yugen.bot
+    hoshi: hoshi-api.yugen.bot
+    hachimitsu: hachimitsu-api.yugen.bot
+    iro: iro-api.yugen.bot
 
 muse:
   enabled: true
