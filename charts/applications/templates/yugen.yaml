@@ -42,6 +42,14 @@ spec:
                 userPasswordKey: "password"
 
           postgresql:
+            primary:
+              resources:
+                requests:
+                  cpu: 2
+                  memory: 1024Mi
+                limits:
+                  cpu: 3
+                  memory: 4096Mi
             auth:
               usePasswordFiles: false
               existingSecret: postgres-secrets
