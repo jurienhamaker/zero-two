@@ -15,7 +15,9 @@ games:
 
 traefik:
   enabled: true
-  domain: zero-two.xyz
+  domains:
+    - zero-two.xyz
+    - the-river-styx.com
   email: whoami@jurien.dev
   clusterHostname: k8s.zero-two.xyz
   dashboard:

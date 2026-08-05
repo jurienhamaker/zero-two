@@ -62,9 +62,11 @@ ports:
       tls:
         certResolver: letsencrypt
         domains:
-          - main: {{ .domain | quote }}
+        {{- range .domains }}
+          - main: {{ .| quote }}
             sans:
-            - "*.{{ .domain }}"
+            - "*.{{ .}}"
+        {{- end }}
   postgres:
     expose:
       default: true
