@@ -72,3 +72,9 @@ databasus:
   enabled: true
   hostnames:
     - databasus.zero-two.xyz
+
+sairo:
+  enabled: true
+  endpoint: https://e2b82da1b0b20a7dd92c493d61915fbb.r2.cloudflarestorage.com
+  hostnames:
+    - files.zero-two.xyz

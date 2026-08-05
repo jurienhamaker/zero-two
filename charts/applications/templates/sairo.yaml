@@ -1,0 +1,45 @@
+{{- if .Values.sairo.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sairo
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: sairo
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - path: .
+      repoURL: oci://registry-1.docker.io/stephenjr002/sairo-helm
+      targetRevision: 1.4.0
+      helm:
+        values: |
+          persistence:
+            storageClassName: 'nfs-k8s'
+
+          ingress:
+            enabled: true
+            className: traefik
+            host: {{ first .Values.sairo.hostnames }}
+
+          s3:
+            endpoint: {{ .Values.sairo.endpoint }}
+            pathStyle: true
+
+    - path: charts/resources/sairo
+      {{- include "infra-repository-values" . | nindent 6 }}
+{{- end }}
