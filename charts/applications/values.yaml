@@ -67,3 +67,8 @@ yugen:
 muse:
   enabled: true
   hostname: muse-api.the-river-styx.com
+
+databasus:
+  enabled: true
+  hostnames:
+    - databasus.zero-two.xyz

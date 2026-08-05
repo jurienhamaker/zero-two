@@ -1,0 +1,44 @@
+{{- if .Values.databasus.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: databasus
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: databasus
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - path: .
+      repoURL: oci://ghcr.io/databasus/charts/databasus
+      targetRevision: 3.51.0
+      helm:
+        values: |
+          persistence:
+            storageClassName: 'nfs-k8s'
+
+          ingress:
+            enabled: true
+            className: traefik
+            hosts:
+              {{- range .Values.databasus.hostnames }}
+              - host: {{ . | quote }}
+                paths:
+                  - path: /
+                    pathType: Prefix
+              {{- end }}
+{{- end }}
