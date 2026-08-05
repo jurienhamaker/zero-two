@@ -29,7 +29,7 @@ spec:
       helm:
         values: |
           image:
-            tag: sha-ae73d31
+            pullPolicy: Always
 
           config:
             OWNER_IDS: "256474214272335872"

@@ -1,0 +1,21 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: yugen-image-updater
+  namespace: argocd
+spec:
+  applicationRefs:
+    - namePattern: "yugen"
+      images:
+        - alias: "kusari"
+          imageName: "ghcr.io/yugen-bot/kusari:main"
+        - alias: "koto"
+          imageName: "ghcr.io/yugen-bot/koto:main"
+        - alias: "kazu"
+          imageName: "ghcr.io/yugen-bot/kazu:main"
+        - alias: "hoshi"
+          imageName: "ghcr.io/yugen-bot/hoshi:main"
+        - alias: "iro"
+          imageName: "ghcr.io/yugen-bot/iro:main"
+        - alias: "hachimitsu"
+          imageName: "ghcr.io/yugen-bot/hachimitsu:main"
