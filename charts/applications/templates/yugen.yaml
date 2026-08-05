@@ -116,7 +116,7 @@ spec:
                       pathType: Prefix
 
           hoshi:
-            enabled: false
+            enabled: true
             secrets:
               existingSecret: hoshi-secrets
             config:
