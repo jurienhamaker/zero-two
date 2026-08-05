@@ -94,7 +94,7 @@ spec:
                       pathType: Prefix
 
           kazu:
-            enabled: false
+            enabled: true
             secrets:
               existingSecret: kazu-secrets
             config:
