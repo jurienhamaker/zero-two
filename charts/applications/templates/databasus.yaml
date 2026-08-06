@@ -22,6 +22,11 @@ spec:
       - CreateNamespace=true
       - SkipDryRunOnMissingResource=true
       - ServerSideApply=true
+  ignoreDifferences:
+    - kind: StatefulSet
+      name: databasus
+      jsonPointers:
+        - /spec/volumeClaimTemplates
   sources:
     - path: .
       repoURL: oci://ghcr.io/databasus/charts/databasus

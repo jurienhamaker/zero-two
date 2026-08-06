@@ -22,6 +22,11 @@ spec:
       - CreateNamespace=true
       - SkipDryRunOnMissingResource=true
       - ServerSideApply=true
+  ignoreDifferences:
+    - kind: Secret
+      name: sairo-secrets
+      jsonPointers:
+        - /data
   sources:
     - path: .
       repoURL: oci://registry-1.docker.io/stephenjr002/sairo-helm
