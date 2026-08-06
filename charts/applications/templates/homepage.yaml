@@ -124,7 +124,7 @@ spec:
                     href: https://proxmox.zero-two.xyz
                     widget:
                       type: proxmox
-                      url: https://192.168.1.150:8006
+                      url: https://proxmox.zero-two.xyz
                       username: "{{ `{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}` }}" 
                       password: "{{ `{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}` }}" 
                       node: zero-two
@@ -214,6 +214,115 @@ spec:
                             url: http://kubitodev-qbittorrent-web.servarr.svc.cluster.local:8080
                             username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}` }}"
                             password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}` }}"
+              - Yugen:
+                - Kusari:
+                    icon: https://github.com/yugen-bot/bots/blob/main/assets/kusari%20emoji.png?raw=true
+                    widget:
+                      type: prometheusmetric
+                      url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
+                      refreshInterval: 5000
+                      metrics:
+                        - label: Online
+                          query: discord_connected{job="kusari"}
+                        - label: CPU
+                          query: cpu_usage_percent{job="kusari"}
+                          format:
+                            type: number
+                            suffix: '%'
+                        - label: Memory
+                          query: process_resident_memory_bytes{job="kusari"}
+                          format:
+                            type: bytes
+                - Koto:
+                    icon: https://github.com/yugen-bot/bots/blob/main/assets/koto%20emoji.png?raw=true
+                    widget:
+                      type: prometheusmetric
+                      url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
+                      refreshInterval: 5000
+                      metrics:
+                        - label: Online
+                          query: discord_connected{job="koto"}
+                        - label: CPU
+                          query: cpu_usage_percent{job="koto"}
+                          format:
+                            type: number
+                            suffix: '%'
+                        - label: Memory
+                          query: process_resident_memory_bytes{job="koto"}
+                          format:
+                            type: bytes
+                - Kazu:
+                    icon: https://github.com/yugen-bot/bots/blob/main/assets/kazu%20emoji.png?raw=true
+                    widget:
+                      type: prometheusmetric
+                      url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
+                      refreshInterval: 5000
+                      metrics:
+                        - label: Online
+                          query: discord_connected{job="kazu"}
+                        - label: CPU
+                          query: cpu_usage_percent{job="kazu"}
+                          format:
+                            type: number
+                            suffix: '%'
+                        - label: Memory
+                          query: process_resident_memory_bytes{job="kazu"}
+                          format:
+                            type: bytes
+                - Hoshi:
+                    icon: https://github.com/yugen-bot/bots/blob/main/assets/hoshi%20emoji.png?raw=true
+                    widget:
+                      type: prometheusmetric
+                      url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
+                      refreshInterval: 5000
+                      metrics:
+                        - label: Online
+                          query: discord_connected{job="hoshi"}
+                        - label: CPU
+                          query: cpu_usage_percent{job="hoshi"}
+                          format:
+                            type: number
+                            suffix: '%'
+                        - label: Memory
+                          query: process_resident_memory_bytes{job="hoshi"}
+                          format:
+                            type: bytes
+                - Hachimitsu:
+                    icon: https://github.com/yugen-bot/bots/blob/main/assets/hachimitsu%20emoji.png?raw=true
+                    widget:
+                      type: prometheusmetric
+                      url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
+                      refreshInterval: 5000
+                      metrics:
+                        - label: Online
+                          query: discord_connected{job="hachimitsu"}
+                        - label: CPU
+                          query: cpu_usage_percent{job="hachimitsu"}
+                          format:
+                            type: number
+                            suffix: '%'
+                        - label: Memory
+                          query: process_resident_memory_bytes{job="hachimitsu"}
+                          format:
+                            type: bytes
+                - Iro:
+                    icon: https://github.com/yugen-bot/bots/blob/main/assets/iro%20emoji.png?raw=true
+                    widget:
+                      type: prometheusmetric
+                      url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
+                      refreshInterval: 5000
+                      metrics:
+                        - label: Online
+                          query: discord_connected{job="iro"}
+                        - label: CPU
+                          query: cpu_usage_percent{job="iro"}
+                          format:
+                            type: number
+                            suffix: '%'
+                        - label: Memory
+                          query: process_resident_memory_bytes{job="iro"}
+                          format:
+                            type: bytes
 
 
 
@@ -237,7 +346,7 @@ spec:
                     memory: true
                     showLabel: true
               - openmeteo:
-                  label: Home
+                  label: Zwolle
                   latitude: 52.3702
                   longitude: 4.8952
                   timezone: Europe/Amsterdam # optional
@@ -248,7 +357,7 @@ spec:
 
             settings:
               title: Zero-Two
-              background: "https://i.pinimg.com/1200x/d1/b8/4d/d1b84d734786a38c5565b47aeb5e69dd.jpg"
+              background: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Black_colour.jpg/960px-Black_colour.jpg"
               cardBlur: xs
               theme: dark
               color: slate
@@ -274,6 +383,10 @@ spec:
                       header: false
                       style: row
                       columns: 2
+                - Yugen:
+                    header: true
+                    style: row
+                    columns: 3
 
     - path: charts/resources/homepage
       {{- include "infra-repository-values" . | nindent 6 }}
