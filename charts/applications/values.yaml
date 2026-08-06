@@ -83,3 +83,6 @@ clanEurope:
   enabled: true
   hostnames:
     pocketbase: pb.claneurope.cc
+
+clanEuropeLegacy:
+  enabled: true

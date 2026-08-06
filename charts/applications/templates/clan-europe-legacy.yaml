@@ -1,0 +1,43 @@
+{{- if .Values.clanEuropeLegacy.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: clan-europe-legacy
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: clan-europe-legacy
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
+      - ServerSideApply=true
+  sources:
+    - chart: legacy
+      repoURL: https://charts.claneurope.cc
+      targetRevision: 0.1.8
+      helm:
+        values: |
+          cvc:
+            imagePullSecrets:
+              - name: docker-registry
+            secrets:
+              existingSecret: cvc-secrets
+            credentials:
+              existingSecret: cvc-secrets
+            config:
+              OWNER_ID: "256474214272335872"
+
+    - path: charts/resources/clan-europe-legacy
+      {{- include "infra-repository-values" . | nindent 6 }}
+{{- end }}
