@@ -222,8 +222,8 @@ spec:
                       url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
                       refreshInterval: 5000
                       metrics:
-                        - label: Online
-                          query: discord_connected{job="kusari"}
+                        - label: Shards
+                          query: discord_shards{job="kusari"}
                         - label: CPU
                           query: cpu_usage_percent{job="kusari"}
                           format:
@@ -240,8 +240,8 @@ spec:
                       url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
                       refreshInterval: 5000
                       metrics:
-                        - label: Online
-                          query: discord_connected{job="koto"}
+                        - label: Shards
+                          query: discord_shards{job="koto"}
                         - label: CPU
                           query: cpu_usage_percent{job="koto"}
                           format:
@@ -258,8 +258,8 @@ spec:
                       url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
                       refreshInterval: 5000
                       metrics:
-                        - label: Online
-                          query: discord_connected{job="kazu"}
+                        - label: Shards
+                          query: discord_shards{job="kazu"}
                         - label: CPU
                           query: cpu_usage_percent{job="kazu"}
                           format:
@@ -276,8 +276,8 @@ spec:
                       url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
                       refreshInterval: 5000
                       metrics:
-                        - label: Online
-                          query: discord_connected{job="hoshi"}
+                        - label: Shards
+                          query: discord_shards{job="hoshi"}
                         - label: CPU
                           query: cpu_usage_percent{job="hoshi"}
                           format:
@@ -294,8 +294,8 @@ spec:
                       url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
                       refreshInterval: 5000
                       metrics:
-                        - label: Online
-                          query: discord_connected{job="hachimitsu"}
+                        - label: Shards
+                          query: discord_shards{job="hachimitsu"}
                         - label: CPU
                           query: cpu_usage_percent{job="hachimitsu"}
                           format:
@@ -312,8 +312,8 @@ spec:
                       url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
                       refreshInterval: 5000
                       metrics:
-                        - label: Online
-                          query: discord_connected{job="iro"}
+                        - label: Shards
+                          query: discord_shards{job="iro"}
                         - label: CPU
                           query: cpu_usage_percent{job="iro"}
                           format:
@@ -357,7 +357,6 @@ spec:
 
             settings:
               title: Zero-Two
-              background: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Black_colour.jpg/960px-Black_colour.jpg"
               cardBlur: xs
               theme: dark
               color: slate
@@ -387,6 +386,17 @@ spec:
                     header: true
                     style: row
                     columns: 3
+
+          persistence:
+            customcss:
+              enabled: "true"
+              type: "custom"
+              volumeSpec:
+                configMap:
+                  name: homepage-custom-css
+              subPath:
+                - path: custom.css
+                  mountPath: /app/config/custom.css
 
     - path: charts/resources/homepage
       {{- include "infra-repository-values" . | nindent 6 }}
