@@ -24,7 +24,7 @@ spec:
       - ServerSideApply=true
   ignoreDifferences:
     - kind: StatefulSet
-      name: databasus
+      group: '*'
       jsonPointers:
         - /spec/volumeClaimTemplates
   sources:
