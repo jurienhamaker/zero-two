@@ -25,7 +25,7 @@ spec:
   sources:
     - chart: go-bots
       repoURL: https://charts.claneurope.cc
-      targetRevision: 0.1.6
+      targetRevision: 0.1.7
       helm:
         values: |
           bot:
