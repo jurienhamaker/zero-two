@@ -25,7 +25,7 @@ spec:
   sources:
     - chart: yugen
       repoURL: https://charts.yugen.bot
-      targetRevision: 0.1.18
+      targetRevision: 0.2.1
       helm:
         values: |
           global:
