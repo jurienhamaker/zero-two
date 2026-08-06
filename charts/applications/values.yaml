@@ -10,11 +10,11 @@ speedtestTracker:
   schedule: "0 */3 * * *"
 
 homepage:
-  enabled: false
+  enabled: true
   hostname: homepage.zero-two.xyz
 
 glance:
-  enabled: true
+  enabled: false
   hostname: glance.zero-two.xyz
 
 hoppscotch:
