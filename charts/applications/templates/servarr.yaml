@@ -243,12 +243,9 @@ spec:
             nfs-media:
               enabled: true
               type: pvc
+              existingClaim: servarr-media-pvc
               mountPath: /mnt/media
               targetSelectAll: true
-              static:
-                mode: nfs
-                share: "/mnt/zero-two/media"
-                server: {{ .Values.nfs.server | quote  }}
 
           workload:
             main:
