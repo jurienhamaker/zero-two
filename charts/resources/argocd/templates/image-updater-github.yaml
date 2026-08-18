@@ -24,3 +24,9 @@ spec:
       conversionStrategy: Default
       metadataPolicy: None
       decodingStrategy: None
+  - secretKey: token
+    remoteRef:
+      key: "github-registry/token"
+      conversionStrategy: Default
+      metadataPolicy: None
+      decodingStrategy: None

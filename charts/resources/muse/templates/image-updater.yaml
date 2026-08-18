@@ -9,3 +9,5 @@ spec:
       images:
         - alias: "muse"
           imageName: "ghcr.io/elysium-stack/muse:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"

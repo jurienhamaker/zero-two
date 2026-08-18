@@ -9,13 +9,25 @@ spec:
       images:
         - alias: "kusari"
           imageName: "ghcr.io/yugen-bot/kusari:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"
         - alias: "koto"
           imageName: "ghcr.io/yugen-bot/koto:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"
         - alias: "kazu"
           imageName: "ghcr.io/yugen-bot/kazu:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"
         - alias: "hoshi"
           imageName: "ghcr.io/yugen-bot/hoshi:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"
         - alias: "iro"
           imageName: "ghcr.io/yugen-bot/iro:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"
         - alias: "hachimitsu"
           imageName: "ghcr.io/yugen-bot/hachimitsu:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"

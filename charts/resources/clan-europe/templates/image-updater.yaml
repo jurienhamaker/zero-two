@@ -9,7 +9,13 @@ spec:
       images:
         - alias: "bot"
           imageName: "ghcr.io/clan-europe/bot:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"
         - alias: "event"
           imageName: "ghcr.io/clan-europe/event:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"
         - alias: "pocketbase"
           imageName: "ghcr.io/clan-europe/pocketbase:main"
+          commonUpdateSettings:
+            updateStrategy: "digest"

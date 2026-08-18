@@ -48,16 +48,13 @@ spec:
       targetRevision: 1.2.4
       helm:
         values: |
-          registries:
-            - name: Docker Hub
-              prefix: docker.io
-              api_url: https://registry-1.docker.io
-              default: true
-            - name: Github
-              prefix: ghcr.io
-              api_url: https://registry-1.ghcr.io
-              credentials: secret:argocd/image-updater-registry#creds
-              defaultns: library
+          config:
+            registries:
+              - name: Github
+                prefix: ghcr.io
+                api_url: https://ghcr.io
+                credentials: secret:argocd/image-updater-registry#creds
+                defaultns: library
     - path: charts/resources/argocd
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
