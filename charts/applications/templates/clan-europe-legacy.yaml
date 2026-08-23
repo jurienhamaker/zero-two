@@ -29,6 +29,8 @@ spec:
       helm:
         values: |
           cvc:
+            image:
+              pullPolicy: Always
             imagePullSecrets:
               - name: docker-registry
             secrets:
@@ -37,6 +39,7 @@ spec:
               existingSecret: cvc-secrets
             config:
               OWNER_ID: "256474214272335872"
+              GUILD_ID: "840902934392733727"
 
     - path: charts/resources/clan-europe-legacy
       {{- include "infra-repository-values" . | nindent 6 }}
