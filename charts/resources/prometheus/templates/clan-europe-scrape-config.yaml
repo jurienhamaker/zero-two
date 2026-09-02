@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: clan-europe-scrape-config
+  labels:
+    release: prometheus
+spec:
+  metricsPath: /api/metrics
+  scrapeInterval: 1m
+  staticConfigs:
+    - labels:
+        job: clan-europe-bot
+      targets:
+        - clan-europe-bot.clan-europe.svc.cluster.local
+    - labels:
+        job: clan-europe-event
+      targets:
+        - clan-europe-event.clan-europe.svc.cluster.local
