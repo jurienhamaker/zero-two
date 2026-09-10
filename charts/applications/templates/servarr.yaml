@@ -35,8 +35,13 @@ spec:
           jellyfin:
             image:
               tag: 10.11.11
-            env:
-              TZ: "Europe/Amsterdam"
+            extraEnvVars:
+              - name: TZ
+                value: "Europe/Amsterdam"
+              - name: JELLYFIN_PublishedServerUrl
+                value: "jelly.zero-two.xyz"
+              - name: DOCKER_MODS
+                value: "linuxserver/mods:jellyfin-opencl-intel"
             enableDLNA: true
             ingress:
               enabled: true
