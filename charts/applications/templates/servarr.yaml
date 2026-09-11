@@ -78,9 +78,15 @@ spec:
               - name: dri
                 hostPath:
                   path: /dev/dri
+              - name: transcode
+                emptyDir:
+                  medium: "Memory"
+                  sizeLimit: "4Gi"
             extraVolumeMounts:
               - name: dri
                 mountPath: /dev/dri
+              - name: transcode
+                mountPath: /transcode
 
           sonarr:
             image:
