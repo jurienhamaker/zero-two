@@ -116,15 +116,15 @@ env:
         name: cloudflare-api-credentials
 
 service:
-    additionalServices:
-      tailscale:
-        labels:
-          traefik-service-label: tailscale
-        annotations:
-          tailscale.com/expose: "true"
-          tailscale.com/proxy-group: "default"
-        spec:
-          type: LoadBalancer
-          loadBalancerClass: tailscale
+  additionalServices:
+    tailscale:
+      labels:
+        traefik-service-label: tailscale
+      annotations:
+        tailscale.com/expose: "true"
+        tailscale.com/proxy-group: "default"
+      spec:
+        type: LoadBalancer
+        loadBalancerClass: tailscale
 {{- end }}
 {{- end -}}
