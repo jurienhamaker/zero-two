@@ -30,7 +30,7 @@ spec:
   sources:
     - path: .
       repoURL: oci://registry-1.docker.io/stephenjr002/sairo-helm
-      targetRevision: 1.5.0
+      targetRevision: 1.5.1
       helm:
         values: |
           persistence:
