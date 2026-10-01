@@ -85,4 +85,4 @@ clanEurope:
     pocketbase: pb.claneurope.cc
 
 clanEuropeLegacy:
-  enabled: true
+  enabled: false
