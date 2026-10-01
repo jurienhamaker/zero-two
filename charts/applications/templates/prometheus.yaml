@@ -40,5 +40,9 @@ spec:
               enabled: true
               storageClassName: "nfs-k8s"
 
+            prometheus:
+              prometheusSpec:
+                retention: 21d
+
     - path: charts/resources/prometheus
       {{- include "infra-repository-values" . | nindent 6 }}
