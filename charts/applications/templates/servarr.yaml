@@ -251,6 +251,8 @@ spec:
                   enabled: true
 
           persistence:
+            config:
+              size: 10Gi
             nfs-media:
               enabled: true
               type: pvc
