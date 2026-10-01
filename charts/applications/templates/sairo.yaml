@@ -35,6 +35,7 @@ spec:
         values: |
           persistence:
             storageClassName: 'nfs-k8s'
+            size: 10Gi
 
           ingress:
             enabled: true
@@ -44,6 +45,8 @@ spec:
           s3:
             endpoint: {{ .Values.sairo.endpoint }}
             pathStyle: true
+
+
 
     - path: charts/resources/sairo
       {{- include "infra-repository-values" . | nindent 6 }}
