@@ -59,6 +59,8 @@ spec:
 
           kusari:
             enabled: true
+            image:
+              pullPolicy: Always
             secrets:
               existingSecret: kusari-secrets
             config:
@@ -81,6 +83,8 @@ spec:
 
           koto:
             enabled: true
+            image:
+              pullPolicy: Always
             secrets:
               existingSecret: koto-secrets
             config:
@@ -103,6 +107,8 @@ spec:
 
           kazu:
             enabled: true
+            image:
+              pullPolicy: Always
             secrets:
               existingSecret: kazu-secrets
             config:
@@ -125,6 +131,8 @@ spec:
 
           hoshi:
             enabled: true
+            image:
+              pullPolicy: Always
             secrets:
               existingSecret: hoshi-secrets
             config:
@@ -147,6 +155,8 @@ spec:
 
           hachimitsu:
             enabled: true
+            image:
+              pullPolicy: Always
             secrets:
               existingSecret: hachimitsu-secrets
             config:
@@ -169,6 +179,8 @@ spec:
 
           iro:
             enabled: true
+            image:
+              pullPolicy: Always
             secrets:
               existingSecret: iro-secrets
             config:
