@@ -35,6 +35,7 @@ spec:
           jellyfin:
             image:
               tag: latest
+              pullPolicy: Always
             extraEnvVars:
               - name: TZ
                 value: "Europe/Amsterdam"
