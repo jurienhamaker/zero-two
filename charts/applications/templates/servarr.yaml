@@ -278,6 +278,7 @@ spec:
       helm:
         values: |
           {{- .Values | toYaml | nindent 10 }}
+    {{- if .Values.servarr.fladder.enabled }}
     - path: charts/fladder
       {{- include "infra-repository-values" . | nindent 6 }}
       helm:
@@ -287,3 +288,4 @@ spec:
 
           ingress:
             hostname: {{ .Values.servarr.fladder.hostname }}
+    {{- end }}

@@ -41,6 +41,7 @@ servarr:
   calibreWeb:
     hostname: calibre.zero-two.xyz
   fladder:
+    enabled: false
     hostname: fladder.zero-two.xyz
 
 prometheus:
