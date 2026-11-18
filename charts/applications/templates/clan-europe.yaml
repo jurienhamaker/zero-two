@@ -36,7 +36,6 @@ spec:
             config:
               SYNC_COMMANDS: "true"
               POCKETBASE_URL: "https://pb.claneurope.cc"
-              POCKETBASE_EMAIL: "superuser@claneurope.cc"
               DISCORD_APP_ID: "1478879150466138182"
               DISCORD_DEVELOPMENT_GUILD_ID: "1164669271310356507"
               DISCORD_LOGS_REPORT_CHANNEL_ID: "1517606780186919036"
@@ -53,7 +52,6 @@ spec:
             config:
               SYNC_COMMANDS: "true"
               POCKETBASE_URL: "https://pb.claneurope.cc"
-              POCKETBASE_EMAIL: "superuser@claneurope.cc"
               DISCORD_APP_ID: "1517586783011995659"
               DISCORD_DEVELOPMENT_GUILD_ID: "1164669271310356507"
               DISCORD_LOGS_REPORT_CHANNEL_ID: "1517606780186919036"
